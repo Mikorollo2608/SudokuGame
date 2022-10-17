@@ -5,6 +5,12 @@ import java.util.Random;
 public class SudokuBoard {
     private int[][] board = new int[9][9];
 
+    /** Getter to a single cell on the board.
+     *
+     * @param row   Row of the board.
+     * @param col   Column of the board.
+     * @return      Asked for cell
+     */
     public int getSquare(int row, int col) {
         return board[row][col];
     }
