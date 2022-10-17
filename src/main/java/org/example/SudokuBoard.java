@@ -9,7 +9,6 @@ public class SudokuBoard {
         return board[row][col];
     }
 
-    @SuppressWarnings("checkstyle:NeedBraces")
     public void fillBoard() {
         Random random = new Random();
 
