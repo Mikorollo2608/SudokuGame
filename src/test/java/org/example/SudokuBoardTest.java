@@ -19,7 +19,7 @@ class SudokuBoardTest {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray[i][j] = sudokuBoard.getSquare(i, j);
+                testArray[i][j] = sudokuBoard.get(i, j);
             }
         }
 
@@ -73,7 +73,7 @@ class SudokuBoardTest {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray2[i][j] = sudokuBoard.getSquare(i, j);
+                testArray2[i][j] = sudokuBoard.get(i, j);
             }
         }
 
@@ -85,7 +85,7 @@ class SudokuBoardTest {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray2[i][j] = sudokuBoard.getSquare(i, j);
+                testArray2[i][j] = sudokuBoard.get(i, j);
             }
         }
 
@@ -96,7 +96,7 @@ class SudokuBoardTest {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray3[i][j] = sudokuBoard2.getSquare(i, j);
+                testArray3[i][j] = sudokuBoard2.get(i, j);
             }
         }
 

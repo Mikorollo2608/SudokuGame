@@ -11,7 +11,7 @@ public class SudokuBoard {
      * @param col   Column of the board.
      * @return      Asked for cell
      */
-    public int getSquare(int row, int col) {
+    public int get(int row, int col) {
         return board[row][col];
     }
 
