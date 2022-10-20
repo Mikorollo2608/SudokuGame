@@ -14,6 +14,21 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <developers>
+        <developer>
+            <id>242493</id>
+            <name>Michał Piestrzeniewicz</name>
+            <email>242493@edu.p.lodz.pl</email>
+        </developer>
+        <developer>
+            <id>242438</id>
+            <name>Jakub Kozielski</name>
+            <email>242438@edu.p.lodz.pl</email>
+        </developer>
+    </developers>
+
+    <description>Projekt grupy laboratoryjnej jm_wt_1300_08</description>
+
     <build>
         <plugins>
             <plugin>
@@ -100,7 +115,6 @@
                 <version>3.0.0-M5</version>
             </plugin>
         </plugins>
-
     </build>
 
     <reporting>
@@ -138,6 +152,16 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.15.0</version>
             </plugin>
         </plugins>
     </reporting>

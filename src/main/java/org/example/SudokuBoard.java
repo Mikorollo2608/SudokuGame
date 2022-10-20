@@ -15,6 +15,10 @@ public class SudokuBoard {
         return board[row][col];
     }
 
+    public void set(int row, int col, int val) {
+        board[row][col] = val;
+    }
+
     public void fillBoard() {
         Random random = new Random();
 
