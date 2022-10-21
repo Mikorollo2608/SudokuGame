@@ -1,12 +1,25 @@
 package org.example;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import java.util.Arrays;
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class SudokuBoardTest {
+
+    @Test
+    void setTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        Random random = new Random();
+        int testValue = random.nextInt(9)+1;
+        int row = random.nextInt(9)+1;
+        int column = random.nextInt(9)+1;
+
+        sudokuBoard.set(row,column,testValue);
+        assertEquals(sudokuBoard.get(row,column),testValue);
+    }
 
     @Test
     void fillBoard() {
