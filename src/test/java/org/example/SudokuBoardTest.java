@@ -1,11 +1,12 @@
 package org.example;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import java.util.Arrays;
 import java.util.Random;
-
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SudokuBoardTest {
 
@@ -13,18 +14,18 @@ class SudokuBoardTest {
     void setTest() {
         SudokuBoard sudokuBoard = new SudokuBoard();
         Random random = new Random();
-        int testValue = random.nextInt(9)+1;
+        int testValue = random.nextInt(9) + 1;
         int row = random.nextInt(9);
         int column = random.nextInt(9);
 
-        sudokuBoard.set(row,column,testValue);
-        assertEquals(sudokuBoard.get(row,column),testValue);
+        sudokuBoard.set(row, column, testValue);
+        assertEquals(sudokuBoard.get(row, column), testValue);
     }
 
     @Test
     void fillBoardEmptyTest() {
         SudokuBoard sudokuBoard = new SudokuBoard();
-        sudokuBoard.fillBoard();
+        sudokuBoard.solveGame();
 
         int[][] testArray = new int[9][9];
         int row = 0;
@@ -82,7 +83,7 @@ class SudokuBoardTest {
 
         //testing 2 different layouts for 2 consecutive calls of fillBoard on different objects
         SudokuBoard sudokuBoard1 = new SudokuBoard();
-        sudokuBoard.fillBoard();
+        sudokuBoard.solveGame();
         int[][] testArray2 = new int[9][9];
 
         for (int i = 0; i < 9; i++) {
@@ -95,7 +96,7 @@ class SudokuBoardTest {
 
         //testing 2 different layouts for 2 consecutive calls fillBoard for 2 different objects
 
-        sudokuBoard.fillBoard();
+        sudokuBoard.solveGame();
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -106,7 +107,7 @@ class SudokuBoardTest {
         SudokuBoard sudokuBoard2 = new SudokuBoard();
         int[][] testArray3 = new int[9][9];
 
-        sudokuBoard2.fillBoard();
+        sudokuBoard2.solveGame();
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -119,16 +120,16 @@ class SudokuBoardTest {
     }
 
     @Test
-    void fillBoardPartiallyFilledTest(){
+    void fillBoardPartiallyFilledTest() {
         SudokuBoard sudokuBoard = new SudokuBoard();
         Random random = new Random();
         int testRow = random.nextInt(9);
         int testColumn = random.nextInt(9);
-        int testValue = random.nextInt(9)+1;
+        int testValue = random.nextInt(9) + 1;
 
-        sudokuBoard.set(testRow,testColumn,testValue);
+        sudokuBoard.set(testRow, testColumn, testValue);
 
-        sudokuBoard.fillBoard();
+        sudokuBoard.solveGame();
 
         int[][] testArray = new int[9][9];
         int row = 0;
@@ -185,7 +186,7 @@ class SudokuBoardTest {
         }
 
         //check if the testValue set before is still the same
-        assertEquals(sudokuBoard.get(testRow,testColumn),testValue);
+        assertEquals(sudokuBoard.get(testRow, testColumn), testValue);
     }
 
 }
