@@ -3,7 +3,11 @@ package org.example;
 public class SudokuBoard {
     private int[][] board = new int[9][9];
 
-    private BacktrackingSudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
+    private BacktrackingSudokuSolver sudokuSolver;
+
+    SudokuBoard() {
+        sudokuSolver = new BacktrackingSudokuSolver();
+    }
 
     {
         //initialize the board with 0
