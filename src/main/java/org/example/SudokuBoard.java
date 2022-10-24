@@ -5,8 +5,8 @@ public class SudokuBoard {
 
     private BacktrackingSudokuSolver sudokuSolver;
 
-    SudokuBoard() {
-        sudokuSolver = new BacktrackingSudokuSolver();
+    public SudokuBoard(BacktrackingSudokuSolver backtrackingSudokuSolver) {
+        sudokuSolver = backtrackingSudokuSolver;
     }
 
     {

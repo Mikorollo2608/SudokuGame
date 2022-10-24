@@ -12,7 +12,8 @@ class SudokuBoardTest {
 
     @Test
     void setTest() {
-        SudokuBoard sudokuBoard = new SudokuBoard();
+        BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
         Random random = new Random();
         int testValue = random.nextInt(9) + 1;
         int row = random.nextInt(9);
@@ -24,7 +25,8 @@ class SudokuBoardTest {
 
     @Test
     void fillBoardEmptyTest() {
-        SudokuBoard sudokuBoard = new SudokuBoard();
+        BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
         sudokuBoard.solveGame();
 
         int[][] testArray = new int[9][9];
@@ -82,7 +84,7 @@ class SudokuBoardTest {
         }
 
         //testing 2 different layouts for 2 consecutive calls of fillBoard on different objects
-        SudokuBoard sudokuBoard1 = new SudokuBoard();
+        SudokuBoard sudokuBoard1 = new SudokuBoard(backtrackingSudokuSolver);
         sudokuBoard.solveGame();
         int[][] testArray2 = new int[9][9];
 
@@ -104,7 +106,7 @@ class SudokuBoardTest {
             }
         }
 
-        SudokuBoard sudokuBoard2 = new SudokuBoard();
+        SudokuBoard sudokuBoard2 = new SudokuBoard(backtrackingSudokuSolver);
         int[][] testArray3 = new int[9][9];
 
         sudokuBoard2.solveGame();
@@ -121,7 +123,8 @@ class SudokuBoardTest {
 
     @Test
     void fillBoardPartiallyFilledTest() {
-        SudokuBoard sudokuBoard = new SudokuBoard();
+        BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
         Random random = new Random();
         int testRow = random.nextInt(9);
         int testColumn = random.nextInt(9);
