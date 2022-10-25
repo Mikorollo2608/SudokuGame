@@ -83,14 +83,21 @@ class SudokuBoardTest {
             }
         }
 
-        //testing 2 different layouts for 2 consecutive calls of fillBoard on different objects
-        SudokuBoard sudokuBoard1 = new SudokuBoard(backtrackingSudokuSolver);
+        //testing 2 different layouts for 2 consecutive calls of fillBoard on the same object
         sudokuBoard.solveGame();
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard.set(i, j, 0);
+            }
+        }
+
+
         int[][] testArray2 = new int[9][9];
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray2[i][j] = sudokuBoard1.get(i, j);
+                testArray2[i][j] = sudokuBoard.get(i, j);
             }
         }
 
@@ -106,14 +113,14 @@ class SudokuBoardTest {
             }
         }
 
-        SudokuBoard sudokuBoard2 = new SudokuBoard(backtrackingSudokuSolver);
+        SudokuBoard sudokuBoard1 = new SudokuBoard(backtrackingSudokuSolver);
         int[][] testArray3 = new int[9][9];
 
-        sudokuBoard2.solveGame();
+        sudokuBoard1.solveGame();
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray3[i][j] = sudokuBoard2.get(i, j);
+                testArray3[i][j] = sudokuBoard1.get(i, j);
             }
         }
 

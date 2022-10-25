@@ -3,10 +3,10 @@ package org.example;
 public class SudokuBoard {
     private int[][] board = new int[9][9];
 
-    private BacktrackingSudokuSolver sudokuSolver;
+    private SudokuSolver sudokuSolver;
 
-    public SudokuBoard(BacktrackingSudokuSolver backtrackingSudokuSolver) {
-        sudokuSolver = backtrackingSudokuSolver;
+    public SudokuBoard(SudokuSolver newSudokuSolver) {
+        sudokuSolver = newSudokuSolver;
     }
 
     {
