@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Stack;
 
 public class BacktrackingSudokuSolver implements SudokuSolver {
+
     @Override
     public void solve(SudokuBoard board) {
 
@@ -54,63 +55,59 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
             //reset back flag
             back = false;
 
+            boolean isValid = false;
+
             //try fitting numbers one by one from numbers array
+            //as long as you won't find one that fits
             int i = startingIndex;
-            for (; i < 9; i++) {
+            for (; i < 9 && !isValid; i++) {
 
-                boolean isValid = true;
+                //assume that number fits
+                isValid = true;
+                //place number in the board and check if it fits
+                board.set(row, col, numbers[i]);
+
                 //check row
-                for (int j = 0; j < 9; j++) {
-                    if (numbers[i] == board.get(row, j)) {
-                        isValid = false;
-                        break;
-                    }
+                //if number doesn't fit reset the cell and try next number
+                if (!board.getRow(row).verify()) {
+                    board.set(row, col, 0);
+                    isValid = false;
+                    continue;
                 }
 
-                //check column
-                for (int j = 0; j < 9; j++) {
-                    if (numbers[i] == board.get(j, col)) {
-                        isValid = false;
-                        break;
-                    }
+                if (!board.getColumn(col).verify()) {
+                    board.set(row, col, 0);
+                    isValid = false;
+                    continue;
                 }
 
-                //check box
-                external:
-                for (int j = row - row % 3; j < (row - row % 3) + 3; j++) {
-                    for (int k = col - col % 3; k < (col - col % 3) + 3; k++) {
-                        if (numbers[i] == board.get(j, k)) {
-                            isValid = false;
-                            break external;
-                        }
-                    }
-                }
-
-                //if the numbers fits set it on the board and move to the next square
-                if (isValid) {
-
-                    //add current cell to the changes stack
-                    changesStack.push(row);
-                    changesStack.push(col);
-                    changesStack.push(i);
-                    startingIndex = 0;
-                    board.set(row, col, numbers[i]);
-                    col++;
-                    if (col == 9) {
-                        row++;
-                        col = 0;
-                    }
-
-                    break;
+                if (!board.getBox(row, col).verify()) {
+                    board.set(row, col, 0);
+                    isValid = false;
                 }
             }
-            //if you reached the end of the loop, then none of the tried numbers fit
-            //move to the previously changed cell
-            if (i == 9) {
+
+            //if number fits move to the next cell
+            if (isValid) {
+
+                //add current cell to the changes stack
+                changesStack.push(row);
+                changesStack.push(col);
+                changesStack.push(i - 1);
+                startingIndex = 0;
+                board.set(row, col, numbers[i - 1]);
+                col++;
+                if (col == 9) {
+                    row++;
+                    col = 0;
+                }
+            } else {
+                //if you reached the end of the loop, then none of the tried numbers fit
+                //move to the previously changed cell
                 back = true;
                 board.set(row, col, 0);
                 //take previous cell information from changesStack
-                startingIndex = changesStack.pop();
+                startingIndex = changesStack.pop() + 1;
                 col = changesStack.pop();
                 row = changesStack.pop();
 
