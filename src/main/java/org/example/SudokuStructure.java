@@ -2,7 +2,7 @@ package org.example;
 
 
 public class SudokuStructure {
-    SudokuField[] contents = new SudokuField[9];
+    private SudokuField[] contents = new SudokuField[9];
 
     public void setContents(SudokuField field, int index) {
         contents[index] = field;
