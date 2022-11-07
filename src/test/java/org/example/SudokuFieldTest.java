@@ -22,5 +22,10 @@ class SudokuFieldTest {
 
         assertEquals(sudokuField.getFieldValue(),9);
 
+        //Value out of range integers (0;9>
+        sudokuField.setFieldValue(32);
+
+        assertEquals(sudokuField.getFieldValue(),0);
+
     }
 }

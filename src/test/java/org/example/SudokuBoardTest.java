@@ -3,6 +3,7 @@ package org.example;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -84,14 +85,13 @@ class SudokuBoardTest {
         }
 
         //testing 2 different layouts for 2 consecutive calls of fillBoard on the same object
-        sudokuBoard.solveGame();
-
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 sudokuBoard.set(i, j, 0);
             }
         }
 
+        sudokuBoard.solveGame();
 
         int[][] testArray2 = new int[9][9];
 
@@ -104,6 +104,11 @@ class SudokuBoardTest {
         assertFalse(Arrays.deepEquals(testArray, testArray2));
 
         //testing 2 different layouts for 2 consecutive calls fillBoard for 2 different objects
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard.set(i, j, 0);
+            }
+        }
 
         sudokuBoard.solveGame();
 
@@ -134,10 +139,16 @@ class SudokuBoardTest {
         SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
         Random random = new Random();
         int testRow = random.nextInt(9);
-        int testColumn = random.nextInt(9);
+        int testColumn = random.nextInt(8);
         int testValue = random.nextInt(9) + 1;
+        int testValue1 = random.nextInt(9) + 1;
+
+        while (testValue1 == testValue) {
+            testValue1 = random.nextInt(9) + 1;
+        }
 
         sudokuBoard.set(testRow, testColumn, testValue);
+        sudokuBoard.set(testRow, 8, testValue1);
 
         sudokuBoard.solveGame();
 
@@ -195,8 +206,49 @@ class SudokuBoardTest {
             }
         }
 
-        //check if the testValue set before is still the same
+        //check if the testValue and testValue1 set before is still the same
         assertEquals(sudokuBoard.get(testRow, testColumn), testValue);
+        assertEquals(sudokuBoard.get(testRow, 8), testValue1);
+    }
+
+    @Test
+    void checkBoardTest() {
+        BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
+
+        //Good solve
+        sudokuBoard.solveGame();
+        assertTrue(sudokuBoard.checkBoard());
+
+        //Clean board
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard.set(i, j, 0);
+            }
+        }
+
+        Random random = new Random();
+        int testValue = random.nextInt(9) + 1;
+
+        //Bad row
+        sudokuBoard.solveGame();
+        sudokuBoard.set(1,1, testValue);
+        sudokuBoard.set(1,2, testValue);
+        assertFalse(sudokuBoard.checkBoard());
+
+        //Clean board
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard.set(i, j, 0);
+            }
+        }
+
+        //Bad column
+        sudokuBoard.solveGame();
+        sudokuBoard.set(1,1, testValue);
+        sudokuBoard.set(2,1, testValue);
+        assertFalse(sudokuBoard.checkBoard());
+
     }
 
 }
