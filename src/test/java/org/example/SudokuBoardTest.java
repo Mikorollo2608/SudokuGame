@@ -212,6 +212,76 @@ class SudokuBoardTest {
     }
 
     @Test
+    void getRowTest() {
+        BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
+        sudokuBoard.solveGame();
+
+        SudokuField[] values = new SudokuField[9];
+
+        int row = 0;
+
+        while (row != 9) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    values[j] = new SudokuField();
+                    values[j].setFieldValue(sudokuBoard.get(row, j));
+                }
+                assertEquals(sudokuBoard.getRow(row).get(i).getFieldValue(),
+                        values[i].getFieldValue());
+            }
+            row++;
+        }
+    }
+
+    @Test
+    void getColumnTest() {
+        BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
+        sudokuBoard.solveGame();
+
+        SudokuField[] values = new SudokuField[9];
+
+        int col = 0;
+
+        while (col != 9) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    values[j] = new SudokuField();
+                    values[j].setFieldValue(sudokuBoard.get(j, col));
+                }
+                assertEquals(sudokuBoard.getColumn(col).get(i).getFieldValue(),
+                        values[i].getFieldValue());
+            }
+            col++;
+        }
+    }
+
+    @Test
+    void getBoxTest() {
+        BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
+        sudokuBoard.solveGame();
+
+        SudokuField[] values = new SudokuField[9];
+
+        for (int startRow = 0; startRow != 9; startRow += 3) {
+            for (int startColumn = 0; startColumn != 9; startColumn += 3) {
+                int counter = 0;
+                for (int i = startRow; i < startRow + 3; i++) {
+                    for (int j = startColumn; j < startColumn + 3; j++) {
+                        values[counter] = new SudokuField();
+                        values[counter].setFieldValue(sudokuBoard.get(i, j));
+                        assertEquals(sudokuBoard.getBox(startRow, startColumn)
+                                .get(counter).getFieldValue(), values[counter].getFieldValue());
+                        counter++;
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
     void checkBoardTest() {
         BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
         SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
@@ -232,8 +302,8 @@ class SudokuBoardTest {
 
         //Bad row
         sudokuBoard.solveGame();
-        sudokuBoard.set(1,1, testValue);
-        sudokuBoard.set(1,2, testValue);
+        sudokuBoard.set(1, 1, testValue);
+        sudokuBoard.set(1, 2, testValue);
         assertFalse(sudokuBoard.checkBoard());
 
         //Clean board
@@ -242,13 +312,41 @@ class SudokuBoardTest {
                 sudokuBoard.set(i, j, 0);
             }
         }
-
         //Bad column
         sudokuBoard.solveGame();
-        sudokuBoard.set(1,1, testValue);
-        sudokuBoard.set(2,1, testValue);
+        int testValue2 = random.nextInt(9) + 1;
+        if (testValue2 == sudokuBoard.get(0, 0)) {
+            testValue2++;
+            if (testValue2 == 9) {
+                testValue2 = 1;
+            }
+        }
+        sudokuBoard.set(0, 0, testValue2);
+        for (int i = 1; i < 9; i++) {
+            if (sudokuBoard.get(0, i) == testValue2) {
+                sudokuBoard.set(0, i, 0);
+            }
+        }
         assertFalse(sudokuBoard.checkBoard());
 
-    }
+        //Clean board
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard.set(i, j, 0);
+            }
+        }
+        //Bad box
+        sudokuBoard.solveGame();
+        sudokuBoard.set(0, 0, sudokuBoard.get(1, 1));
+        for (int i = 1; i < 9; i++) {
+            if (sudokuBoard.get(0, i) ==  sudokuBoard.get(1, 1)) {
+                sudokuBoard.set(0, i, 0);
+            }
+            if (sudokuBoard.get(i, 0) ==  sudokuBoard.get(1, 1)) {
+                sudokuBoard.set(i, 0, 0);
+            }
+        }
 
+        assertFalse(sudokuBoard.checkBoard());
+    }
 }
