@@ -5,7 +5,8 @@ public class SudokuStructure {
     private SudokuField[] contents = new SudokuField[9];
 
     public void setContents(SudokuField field, int index) {
-        contents[index] = field;
+        contents[index] = new SudokuField();
+        contents[index].setFieldValue(field.getFieldValue());
     }
 
     public SudokuField get(int index) {

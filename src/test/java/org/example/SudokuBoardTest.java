@@ -3,6 +3,7 @@ package org.example;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -227,6 +228,7 @@ class SudokuBoardTest {
                     values[j] = new SudokuField();
                     values[j].setFieldValue(sudokuBoard.get(row, j));
                 }
+                assertNotNull(sudokuBoard.getRow(row));
                 assertEquals(sudokuBoard.getRow(row).get(i).getFieldValue(),
                         values[i].getFieldValue());
             }
@@ -243,13 +245,13 @@ class SudokuBoardTest {
         SudokuField[] values = new SudokuField[9];
 
         int col = 0;
-
         while (col != 9) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     values[j] = new SudokuField();
                     values[j].setFieldValue(sudokuBoard.get(j, col));
                 }
+                assertNotNull(sudokuBoard.getColumn(col));
                 assertEquals(sudokuBoard.getColumn(col).get(i).getFieldValue(),
                         values[i].getFieldValue());
             }
@@ -272,6 +274,7 @@ class SudokuBoardTest {
                     for (int j = startColumn; j < startColumn + 3; j++) {
                         values[counter] = new SudokuField();
                         values[counter].setFieldValue(sudokuBoard.get(i, j));
+                        assertNotNull(sudokuBoard.getBox(startRow,startColumn));
                         assertEquals(sudokuBoard.getBox(startRow, startColumn)
                                 .get(counter).getFieldValue(), values[counter].getFieldValue());
                         counter++;
