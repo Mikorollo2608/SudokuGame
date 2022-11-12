@@ -1,43 +1,31 @@
 package org.example;
 
-import java.util.Random;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
 
 public class BacktrackingSudokuSolver implements SudokuSolver {
 
     @Override
     public void solve(SudokuBoard board) {
 
-        Random random = new Random();
-
         //shuffle the priorities of numbers
-        int[] numbers = new int[9];
-        for (int i = 0; i < 9; i++) {
-            while (numbers[i] == 0) {
-                int temp = random.nextInt(9) + 1;
-                int j = 0;
-                for (; j < i; j++) {
-                    if (temp == numbers[j]) {
-                        break;
-                    }
-                }
-                if (j == i) {
-                    numbers[i] = temp;
-                }
-            }
-        }
+        List<Integer> numbers = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
+        Collections.shuffle(numbers);
 
         int row = 0;
         int col = 0;
 
         //holds row,column and index of previously tested cell
         //index being index of tested number from an array numbers
-        Stack<Integer> changesStack = new Stack<>();
+        Deque<Integer> changesStack = new ArrayDeque<>();
         //flag indicating that the solver is taking a step back
         boolean back = false;
         //index from which start trying numbers
         int startingIndex = 0;
-
 
         //try to fit numbers until you reach out of the board
         while (row != 9) {
@@ -65,7 +53,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
                 //assume that number fits
                 isValid = true;
                 //place number in the board and check if it fits
-                board.set(row, col, numbers[i]);
+                board.set(row, col, numbers.get(i));
 
                 //check row
                 //if number doesn't fit reset the cell and try next number
@@ -95,7 +83,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
                 changesStack.push(col);
                 changesStack.push(i - 1);
                 startingIndex = 0;
-                board.set(row, col, numbers[i - 1]);
+                board.set(row, col, numbers.get(i - 1));
                 col++;
                 if (col == 9) {
                     row++;
