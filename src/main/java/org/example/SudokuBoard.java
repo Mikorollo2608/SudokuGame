@@ -1,20 +1,20 @@
 package org.example;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SudokuBoard {
-    private SudokuField[][] board = new SudokuField[9][9];
+    private List<SudokuField> board = Arrays.asList(new SudokuField[81]);
 
     private SudokuSolver sudokuSolver;
 
     public SudokuBoard(SudokuSolver newSudokuSolver) {
         sudokuSolver = newSudokuSolver;
-    }
 
-    {
         //initialize the board with 0
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                board[i][j] = new SudokuField();
-            }
+        for (int i = 0; i < 81; i++) {
+            board.set(i, new SudokuField());
+            board.get(i).setFieldValue(0);
         }
     }
 
@@ -26,11 +26,11 @@ public class SudokuBoard {
      * @return Asked for cell
      */
     public int get(int row, int col) {
-        return board[row][col].getFieldValue();
+        return board.get(row * 9 + col).getFieldValue();
     }
 
     public void set(int row, int col, int val) {
-        board[row][col].setFieldValue(val);
+        board.get(row * 9 + col).setFieldValue(val);
     }
 
     public void solveGame() {
@@ -40,7 +40,7 @@ public class SudokuBoard {
     public SudokuRow getRow(int row) {
         SudokuRow sudokuRow = new SudokuRow();
         for (int i = 0; i < 9; i++) {
-            sudokuRow.setContents(board[row][i], i);
+            sudokuRow.setContents(board.get(row * 9 + i), i);
         }
         return sudokuRow;
     }
@@ -48,7 +48,7 @@ public class SudokuBoard {
     public SudokuColumn getColumn(int column) {
         SudokuColumn sudokuColumn = new SudokuColumn();
         for (int i = 0; i < 9; i++) {
-            sudokuColumn.setContents(board[i][column], i);
+            sudokuColumn.setContents(board.get(i * 9 + column), i);
         }
         return sudokuColumn;
     }
@@ -58,7 +58,7 @@ public class SudokuBoard {
         int index = 0;
         for (int i = row - row % 3; i < (row - row % 3) + 3; i++) {
             for (int j = column - column % 3; j < (column - column % 3) + 3; j++) {
-                sudokuBox.setContents(board[i][j],index);
+                sudokuBox.setContents(board.get(i * 9 + j), index);
                 index++;
             }
         }
@@ -68,7 +68,7 @@ public class SudokuBoard {
     boolean checkBoard() {
         for (int i = 0; i < 9; i++) {
             if (!getRow(i).verify()) {
-                return  false;
+                return false;
             }
         }
         for (int i = 0; i < 9; i++) {
@@ -78,7 +78,7 @@ public class SudokuBoard {
         }
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (!getBox(3 * i,3 * j).verify()) {
+                if (!getBox(3 * i, 3 * j).verify()) {
                     return false;
                 }
             }
