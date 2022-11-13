@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
 
@@ -31,13 +32,13 @@ class SudokuBoardTest {
         SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
         sudokuBoard.solveGame();
 
-        int[][] testArray = new int[9][9];
+        List<Integer> testArray = Arrays.asList(new Integer[81]);
         int row = 0;
         int col = 0;
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray[i][j] = sudokuBoard.get(i, j);
+                testArray.set(i * 9 + j, sudokuBoard.get(i, j));
             }
         }
 
@@ -45,7 +46,7 @@ class SudokuBoardTest {
         while (row != 9) {
             for (int i = 0; i < 9; i++) {
                 for (int j = i + 1; j < 9; j++) {
-                    assertNotEquals(testArray[row][j], testArray[row][i]);
+                    assertNotEquals(testArray.get(row * 9 + j), testArray.get(row * 9 + i));
                 }
             }
             row++;
@@ -55,7 +56,7 @@ class SudokuBoardTest {
         while (col != 9) {
             for (int i = 0; i < 9; i++) {
                 for (int j = i + 1; j < 9; j++) {
-                    assertNotEquals(testArray[j][col], testArray[i][col]);
+                    assertNotEquals(testArray.get(j * 9 + col), testArray.get(i * 9 + col));
                 }
             }
             col++;
@@ -68,14 +69,14 @@ class SudokuBoardTest {
         while (row < 9) {
             for (int i = row; i < row + 3; i++) {
                 for (int j = col; j < col + 3; j++) {
-                    tmp = testArray[i][j];
-                    testArray[i][j] = 0;
+                    tmp = testArray.get(i * 9 + j);
+                    testArray.set(i * 9 + j, 0);
                     for (int a = i; a < row + 3; a++) {
                         for (int b = j; b < col + 3; b++) {
-                            assertNotEquals(tmp, testArray[a][b]);
+                            assertNotEquals(tmp, testArray.get(a * 9 + b));
                         }
                     }
-                    testArray[i][j] = tmp;
+                    testArray.set(i * 9 + j, tmp);
                 }
             }
             col += 3;
@@ -94,15 +95,16 @@ class SudokuBoardTest {
 
         sudokuBoard.solveGame();
 
-        int[][] testArray2 = new int[9][9];
+        List<Integer> testArray2 = Arrays.asList(new Integer[81]);
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray2[i][j] = sudokuBoard.get(i, j);
+                testArray2.set(i * 9 + j, sudokuBoard.get(i, j));
             }
         }
 
-        assertFalse(Arrays.deepEquals(testArray, testArray2));
+        //assertFalse(testArray.equals(testArray2));
+        assertNotEquals(testArray, testArray2);
 
         //testing 2 different layouts for 2 consecutive calls fillBoard for 2 different objects
         for (int i = 0; i < 9; i++) {
@@ -115,22 +117,23 @@ class SudokuBoardTest {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray2[i][j] = sudokuBoard.get(i, j);
+                testArray2.set(i * 9 + j, sudokuBoard.get(i, j));
             }
         }
 
         SudokuBoard sudokuBoard1 = new SudokuBoard(backtrackingSudokuSolver);
-        int[][] testArray3 = new int[9][9];
+        List<Integer> testArray3 = Arrays.asList(new Integer[81]);
 
         sudokuBoard1.solveGame();
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray3[i][j] = sudokuBoard1.get(i, j);
+                testArray3.set(i * 9 + j, sudokuBoard1.get(i, j));
             }
         }
 
-        assertFalse(Arrays.deepEquals(testArray2, testArray3));
+        //assertFalse(testArray2.equals(testArray3));
+        assertNotEquals(testArray2, testArray3);
 
     }
 
@@ -153,13 +156,13 @@ class SudokuBoardTest {
 
         sudokuBoard.solveGame();
 
-        int[][] testArray = new int[9][9];
+        List<Integer> testArray = Arrays.asList(new Integer[81]);
         int row = 0;
         int col = 0;
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                testArray[i][j] = sudokuBoard.get(i, j);
+                testArray.set(i * 9 + j, sudokuBoard.get(i, j));
             }
         }
 
@@ -167,7 +170,7 @@ class SudokuBoardTest {
         while (row != 9) {
             for (int i = 0; i < 9; i++) {
                 for (int j = i + 1; j < 9; j++) {
-                    assertNotEquals(testArray[row][j], testArray[row][i]);
+                    assertNotEquals(testArray.get(row * 9 + j), testArray.get(row * 9 + i));
                 }
             }
             row++;
@@ -177,7 +180,7 @@ class SudokuBoardTest {
         while (col != 9) {
             for (int i = 0; i < 9; i++) {
                 for (int j = i + 1; j < 9; j++) {
-                    assertNotEquals(testArray[j][col], testArray[i][col]);
+                    assertNotEquals(testArray.get(j * 9 + col), testArray.get(i * 9 + col));
                 }
             }
             col++;
@@ -190,14 +193,14 @@ class SudokuBoardTest {
         while (row < 9) {
             for (int i = row; i < row + 3; i++) {
                 for (int j = col; j < col + 3; j++) {
-                    tmp = testArray[i][j];
-                    testArray[i][j] = 0;
+                    tmp = testArray.get(i * 9 + j);
+                    testArray.set(i * 9 + j, 0);
                     for (int a = i; a < row + 3; a++) {
                         for (int b = j; b < col + 3; b++) {
-                            assertNotEquals(tmp, testArray[a][b]);
+                            assertNotEquals(tmp, testArray.get(a * 9 + b));
                         }
                     }
-                    testArray[i][j] = tmp;
+                    testArray.set(i * 9 + j, tmp);
                 }
             }
             col += 3;
@@ -218,19 +221,19 @@ class SudokuBoardTest {
         SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
         sudokuBoard.solveGame();
 
-        SudokuField[] values = new SudokuField[9];
+        List<SudokuField> values = Arrays.asList(new SudokuField[9]);
 
         int row = 0;
 
         while (row != 9) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    values[j] = new SudokuField();
-                    values[j].setFieldValue(sudokuBoard.get(row, j));
+                    values.set(j, new SudokuField());
+                    values.get(j).setFieldValue(sudokuBoard.get(row, j));
                 }
                 assertNotNull(sudokuBoard.getRow(row));
                 assertEquals(sudokuBoard.getRow(row).get(i).getFieldValue(),
-                        values[i].getFieldValue());
+                        values.get(i).getFieldValue());
             }
             row++;
         }
@@ -242,18 +245,18 @@ class SudokuBoardTest {
         SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
         sudokuBoard.solveGame();
 
-        SudokuField[] values = new SudokuField[9];
+        List<SudokuField> values = Arrays.asList(new SudokuField[9]);
 
         int col = 0;
         while (col != 9) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    values[j] = new SudokuField();
-                    values[j].setFieldValue(sudokuBoard.get(j, col));
+                    values.set(j, new SudokuField());
+                    values.get(j).setFieldValue(sudokuBoard.get(j, col));
                 }
                 assertNotNull(sudokuBoard.getColumn(col));
                 assertEquals(sudokuBoard.getColumn(col).get(i).getFieldValue(),
-                        values[i].getFieldValue());
+                        values.get(i).getFieldValue());
             }
             col++;
         }
@@ -265,18 +268,18 @@ class SudokuBoardTest {
         SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
         sudokuBoard.solveGame();
 
-        SudokuField[] values = new SudokuField[9];
+        List<SudokuField> values = Arrays.asList(new SudokuField[9]);
 
         for (int startRow = 0; startRow != 9; startRow += 3) {
             for (int startColumn = 0; startColumn != 9; startColumn += 3) {
                 int counter = 0;
                 for (int i = startRow; i < startRow + 3; i++) {
                     for (int j = startColumn; j < startColumn + 3; j++) {
-                        values[counter] = new SudokuField();
-                        values[counter].setFieldValue(sudokuBoard.get(i, j));
+                        values.set(counter, new SudokuField());
+                        values.get(counter).setFieldValue(sudokuBoard.get(i, j));
                         assertNotNull(sudokuBoard.getBox(startRow,startColumn));
                         assertEquals(sudokuBoard.getBox(startRow, startColumn)
-                                .get(counter).getFieldValue(), values[counter].getFieldValue());
+                                .get(counter).getFieldValue(), values.get(counter).getFieldValue());
                         counter++;
                     }
                 }
