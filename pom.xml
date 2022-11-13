@@ -29,6 +29,14 @@
 
     <description>Projekt grupy laboratoryjnej jm_wt_1300_08</description>
 
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License v3.0 or later</name>
+            <url>https://www.gnu.org/licenses/lgpl+gpl-3.0.txt</url>
+            <distribution>manual</distribution>
+        </license>
+    </licenses>
+
     <build>
         <plugins>
             <plugin>
