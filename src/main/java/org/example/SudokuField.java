@@ -14,4 +14,9 @@ public class SudokuField {
             this.value = 0;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Value: %s".formatted(value);
+    }
 }

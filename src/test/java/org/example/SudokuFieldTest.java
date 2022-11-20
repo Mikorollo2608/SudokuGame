@@ -26,4 +26,16 @@ class SudokuFieldTest {
         assertEquals(sudokuField.getFieldValue(),0);
 
     }
+
+    @Test
+    void toStringTest() {
+        SudokuField sudokuField = new SudokuField();
+
+        assertEquals(sudokuField.toString(),"Value: 0");
+
+        SudokuField sudokuField1 = new SudokuField();
+        sudokuField1.setFieldValue(8);
+
+        assertEquals(sudokuField1.toString(),"Value: 8");
+    }
 }

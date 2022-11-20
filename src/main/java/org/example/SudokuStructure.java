@@ -26,4 +26,23 @@ public class SudokuStructure {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        String temp = "";
+        int counter = 0;
+        for (SudokuField sudokuField : contents) {
+            temp += "[";
+            temp += Integer.toString(counter);
+            temp += "] ";
+            if (sudokuField == null) {
+                temp += "null ";
+            } else {
+                temp += sudokuField.toString();
+                temp += " ";
+            }
+            counter++;
+        }
+        return temp;
+    }
 }
