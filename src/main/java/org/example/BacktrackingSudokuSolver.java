@@ -13,7 +13,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
     public void solve(SudokuBoard board) {
 
         //shuffle the priorities of numbers
-        List<Integer> numbers = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
+        List<Integer> numbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
         Collections.shuffle(numbers);
 
         int row = 0;
@@ -101,5 +101,10 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
 
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "BacktrackingSudokuSolver";
     }
 }
