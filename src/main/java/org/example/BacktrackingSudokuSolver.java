@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,6 +107,9 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
 
     @Override
     public String toString() {
-        return "BacktrackingSudokuSolver";
+        String name = "BacktrackingSudokuSolver";
+        return MoreObjects.toStringHelper(this)
+                .add("name", name)
+                .toString();
     }
 }
