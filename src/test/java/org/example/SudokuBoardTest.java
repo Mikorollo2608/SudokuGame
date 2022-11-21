@@ -277,7 +277,7 @@ class SudokuBoardTest {
                     for (int j = startColumn; j < startColumn + 3; j++) {
                         values.set(counter, new SudokuField());
                         values.get(counter).setFieldValue(sudokuBoard.get(i, j));
-                        assertNotNull(sudokuBoard.getBox(startRow,startColumn));
+                        assertNotNull(sudokuBoard.getBox(startRow, startColumn));
                         assertEquals(sudokuBoard.getBox(startRow, startColumn)
                                 .get(counter).getFieldValue(), values.get(counter).getFieldValue());
                         counter++;
@@ -345,14 +345,53 @@ class SudokuBoardTest {
         sudokuBoard.solveGame();
         sudokuBoard.set(0, 0, sudokuBoard.get(1, 1));
         for (int i = 1; i < 9; i++) {
-            if (sudokuBoard.get(0, i) ==  sudokuBoard.get(1, 1)) {
+            if (sudokuBoard.get(0, i) == sudokuBoard.get(1, 1)) {
                 sudokuBoard.set(0, i, 0);
             }
-            if (sudokuBoard.get(i, 0) ==  sudokuBoard.get(1, 1)) {
+            if (sudokuBoard.get(i, 0) == sudokuBoard.get(1, 1)) {
                 sudokuBoard.set(i, 0, 0);
             }
         }
 
         assertFalse(sudokuBoard.checkBoard());
     }
+
+    @Test
+    void toStringTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        String testString = "";
+        for (int j = 0; j < 9; j++) {
+            for (int k = 0; k < 9; k++) {
+                testString = testString.concat(Integer.toString(sudokuBoard.get(j, k)));
+                testString = testString.concat(" ");
+                if (k == 2 || k == 5) {
+                    testString = testString.concat("| ");
+                }
+            }
+            testString = testString.concat("\n");
+            if (j == 2 || j == 5) {
+                testString = testString.concat("---------------------\n");
+            }
+        }
+
+        assertEquals(testString, sudokuBoard.toString());
+
+        sudokuBoard.solveGame();
+        String testString2 = "";
+        for (int j = 0; j < 9; j++) {
+            for (int k = 0; k < 9; k++) {
+                testString2 = testString2.concat(Integer.toString(sudokuBoard.get(j, k)));
+                testString2 = testString2.concat(" ");
+                if (k == 2 || k == 5) {
+                    testString2 = testString2.concat("| ");
+                }
+            }
+            testString2 = testString2.concat("\n");
+            if (j == 2 || j == 5) {
+                testString2 = testString2.concat("---------------------\n");
+            }
+        }
+
+    }
+
 }
