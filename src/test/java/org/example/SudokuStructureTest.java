@@ -2,6 +2,7 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+
 
 class SudokuStructureTest {
 
@@ -76,16 +78,67 @@ class SudokuStructureTest {
 
         for (int i = 0; i < 9; i++) {
             board.set(i, new SudokuField());
-            board.get(i).setFieldValue(i);
+            board.get(i).setFieldValue(i + 1);
             sudokuStructure.setContents(board.get(i), i);
         }
 
-        assertEquals(sudokuStructure.toString(), "[0] Value: 0 [1] Value: 1 [2] Value: 2 "
-                + "[3] Value: 3 [4] Value: 4 [5] Value: 5 [6] Value: 6 [7] Value: 7 [8] Value: 8 ");
+        assertEquals("SudokuStructure{contents=[SudokuField{value=1}, SudokuField{value=2}, "
+                + "SudokuField{value=3}, SudokuField{value=4}, SudokuField{value=5}, "
+                + "SudokuField{value=6}, SudokuField{value=7}, SudokuField{value=8},"
+                + " SudokuField{value=9}]}", sudokuStructure.toString());
+
 
         SudokuStructure sudokuStructure1 = new SudokuStructure();
 
-        assertEquals(sudokuStructure1.toString(), "[0] null [1] null [2] null [3] null [4] null "
-                + "[5] null [6] null [7] null [8] null ");
+        assertEquals("SudokuStructure{contents=[null, null, null, null, null, null, null, null,"
+                + " null]}", sudokuStructure1.toString());
     }
+
+    @Test
+    void equalsTest() {
+
+        SudokuStructure sudokuStructure = new SudokuStructure();
+        SudokuStructure sudokuStructure1 = new SudokuStructure();
+
+        List<SudokuField> board = Arrays.asList(new SudokuField[9]);
+
+        for (int i = 0; i < 9; i++) {
+            board.set(i, new SudokuField());
+            board.get(i).setFieldValue(i + 1);
+            sudokuStructure.setContents(board.get(i), i);
+            sudokuStructure1.setContents(board.get(i), i);
+        }
+
+        assertTrue(sudokuStructure.equals(sudokuStructure));
+        assertTrue(sudokuStructure.equals(sudokuStructure1));
+        assertFalse(sudokuStructure.equals(null));
+    }
+
+    @Test
+    void hashCodeTest() {
+        SudokuStructure sudokuStructure = new SudokuStructure();
+        SudokuStructure sudokuStructure1 = new SudokuStructure();
+
+        List<SudokuField> board = Arrays.asList(new SudokuField[9]);
+
+        for (int i = 0; i < 9; i++) {
+            board.set(i, new SudokuField());
+            board.get(i).setFieldValue(i + 1);
+            sudokuStructure.setContents(board.get(i), i);
+            sudokuStructure1.setContents(board.get(i), i);
+        }
+
+        int hashCode = sudokuStructure.hashCode();
+
+        assertEquals(sudokuStructure.hashCode(), hashCode);
+        assertEquals(sudokuStructure.hashCode(), sudokuStructure1.hashCode());
+
+
+        SudokuField sudokuField = new SudokuField();
+        sudokuField.setFieldValue(8);
+        sudokuStructure.setContents(sudokuField,1);
+
+        assertNotEquals(sudokuStructure.hashCode(), hashCode);
+    }
+
 }

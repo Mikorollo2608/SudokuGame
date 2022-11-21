@@ -356,42 +356,4 @@ class SudokuBoardTest {
         assertFalse(sudokuBoard.checkBoard());
     }
 
-    @Test
-    void toStringTest() {
-        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        String testString = "";
-        for (int j = 0; j < 9; j++) {
-            for (int k = 0; k < 9; k++) {
-                testString = testString.concat(Integer.toString(sudokuBoard.get(j, k)));
-                testString = testString.concat(" ");
-                if (k == 2 || k == 5) {
-                    testString = testString.concat("| ");
-                }
-            }
-            testString = testString.concat("\n");
-            if (j == 2 || j == 5) {
-                testString = testString.concat("---------------------\n");
-            }
-        }
-
-        assertEquals(testString, sudokuBoard.toString());
-
-        sudokuBoard.solveGame();
-        String testString2 = "";
-        for (int j = 0; j < 9; j++) {
-            for (int k = 0; k < 9; k++) {
-                testString2 = testString2.concat(Integer.toString(sudokuBoard.get(j, k)));
-                testString2 = testString2.concat(" ");
-                if (k == 2 || k == 5) {
-                    testString2 = testString2.concat("| ");
-                }
-            }
-            testString2 = testString2.concat("\n");
-            if (j == 2 || j == 5) {
-                testString2 = testString2.concat("---------------------\n");
-            }
-        }
-
-    }
-
 }
