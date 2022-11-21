@@ -90,8 +90,22 @@ public class SudokuBoard {
 
     @Override
     public String toString() {
+        String temp = "\n";
+        for (int j = 0; j < 9; j++) {
+            for (int k = 0; k < 9; k++) {
+                temp = temp.concat(Integer.toString(get(j, k)));
+                temp = temp.concat(" ");
+                if (k == 2 || k == 5) {
+                    temp = temp.concat("| ");
+                }
+            }
+            temp = temp.concat("\n");
+            if (j == 2 || j == 5) {
+                temp = temp.concat("---------------------\n");
+            }
+        }
         return MoreObjects.toStringHelper(this)
-                .add("board", board)
+                .addValue(temp)
                 .toString();
     }
 
@@ -103,7 +117,7 @@ public class SudokuBoard {
         if (!(o instanceof SudokuBoard that)) {
             return false;
         }
-        return Objects.equal(board, that.board) && Objects.equal(sudokuSolver, that.sudokuSolver);
+        return Objects.equal(board, that.board);
     }
 
     @Override

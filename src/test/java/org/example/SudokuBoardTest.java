@@ -356,4 +356,168 @@ class SudokuBoardTest {
         assertFalse(sudokuBoard.checkBoard());
     }
 
+    @Test
+    void toStringTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        String testString = "SudokuBoard{\n";
+        for (int j = 0; j < 9; j++) {
+            for (int k = 0; k < 9; k++) {
+                testString = testString.concat(Integer.toString(sudokuBoard.get(j, k)));
+                testString = testString.concat(" ");
+                if (k == 2 || k == 5) {
+                    testString = testString.concat("| ");
+                }
+            }
+            testString = testString.concat("\n");
+            if (j == 2 || j == 5) {
+                testString = testString.concat("---------------------\n");
+            }
+        }
+        testString = testString.concat("}");
+
+        assertEquals(testString, sudokuBoard.toString());
+
+        sudokuBoard.solveGame();
+        String testString2 = "SudokuBoard{\n";
+        for (int j = 0; j < 9; j++) {
+            for (int k = 0; k < 9; k++) {
+                testString2 = testString2.concat(Integer.toString(sudokuBoard.get(j, k)));
+                testString2 = testString2.concat(" ");
+                if (k == 2 || k == 5) {
+                    testString2 = testString2.concat("| ");
+                }
+            }
+            testString2 = testString2.concat("\n");
+            if (j == 2 || j == 5) {
+                testString2 = testString2.concat("---------------------\n");
+            }
+        }
+        testString2 = testString2.concat("}");
+
+        assertEquals(testString2, sudokuBoard.toString());
+    }
+
+    @Test
+    void equalsSameObject() {
+        SudokuBoard sudokuBoard1 = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertTrue(sudokuBoard1.equals(sudokuBoard1));
+    }
+
+    @Test
+    void equalsNull() {
+        SudokuBoard sudokuBoard1 = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertFalse(sudokuBoard1.equals(null));
+    }
+
+    @Test
+    void equalsDifferentType() {
+        SudokuBoard sudokuBoard1 = new SudokuBoard(new BacktrackingSudokuSolver());
+        SudokuField field = new SudokuField();
+
+        assertNotEquals(field, null);
+        assertFalse(sudokuBoard1.equals(field));
+    }
+
+    @Test
+    void equalsTwoObjectsSameTypeDiffValues() {
+        BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard1 = new SudokuBoard(solver);
+        SudokuBoard sudokuBoard2 = new SudokuBoard(solver);
+
+        sudokuBoard1.solveGame();
+        sudokuBoard2.solveGame();
+
+        assertFalse(sudokuBoard1.equals(sudokuBoard2));
+    }
+
+    @Test
+    void equalsTwoObjectsSameTypeSameValues() {
+        BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard1 = new SudokuBoard(solver);
+        SudokuBoard sudokuBoard2 = new SudokuBoard(solver);
+
+        sudokuBoard1.solveGame();
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard2.set(i, j,sudokuBoard1.get(i, j));
+            }
+        }
+
+
+        assertTrue(sudokuBoard1.equals(sudokuBoard2));
+    }
+
+    @Test
+    void equalsTwoObjectsSameTypeEmpty() {
+        BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard1 = new SudokuBoard(solver);
+        SudokuBoard sudokuBoard2 = new SudokuBoard(solver);
+
+        sudokuBoard1.solveGame();
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard2.set(i, j,sudokuBoard1.get(i, j));
+            }
+        }
+
+
+        assertTrue(sudokuBoard1.equals(sudokuBoard2));
+    }
+
+    @Test
+    void hashCodeTestSameObject() {
+        SudokuBoard sudokuBoard1 = new SudokuBoard(new BacktrackingSudokuSolver());
+
+        assertEquals(sudokuBoard1.hashCode(), sudokuBoard1.hashCode());
+    }
+
+    @Test
+    void hashCodeDiffType() {
+        SudokuBoard sudokuBoard1 = new SudokuBoard(new BacktrackingSudokuSolver());
+        SudokuField field = new SudokuField();
+
+        assertEquals(sudokuBoard1.hashCode(), sudokuBoard1.hashCode());
+    }
+
+    @Test
+    void hashCodeTestEmptyObjects() {
+        BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard1 = new SudokuBoard(solver);
+        SudokuBoard sudokuBoard2 = new SudokuBoard(solver);
+
+        assertTrue(sudokuBoard1.equals(sudokuBoard2));
+        assertEquals(sudokuBoard1.hashCode(), sudokuBoard2.hashCode());
+    }
+
+    @Test
+    void hashCodeTestSameTypeDiffValues() {
+        BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard1 = new SudokuBoard(solver);
+        SudokuBoard sudokuBoard2 = new SudokuBoard(solver);
+
+        sudokuBoard1.solveGame();
+        sudokuBoard2.solveGame();
+
+        assertFalse(sudokuBoard1.equals(sudokuBoard2));
+        assertNotEquals(sudokuBoard1.hashCode(), sudokuBoard2.hashCode());
+    }
+
+    @Test
+    void hashCodeSameTypeSameValues() {
+        BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard1 = new SudokuBoard(solver);
+        SudokuBoard sudokuBoard2 = new SudokuBoard(solver);
+
+        sudokuBoard1.solveGame();
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard2.set(i, j,sudokuBoard1.get(i, j));
+            }
+        }
+
+
+        assertTrue(sudokuBoard1.equals(sudokuBoard2));
+        assertEquals(sudokuBoard1.hashCode(), sudokuBoard2.hashCode());
+    }
+
 }
