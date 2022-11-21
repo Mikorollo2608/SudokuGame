@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,20 +31,24 @@ public class SudokuStructure {
 
     @Override
     public String toString() {
-        String temp = "";
-        int counter = 0;
-        for (SudokuField sudokuField : contents) {
-            temp += "[";
-            temp += Integer.toString(counter);
-            temp += "] ";
-            if (sudokuField == null) {
-                temp += "null ";
-            } else {
-                temp += sudokuField.toString();
-                temp += " ";
-            }
-            counter++;
+        return MoreObjects.toStringHelper(this)
+                .add("contents", contents)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        return temp;
+        if (!(o instanceof SudokuStructure that)) {
+            return false;
+        }
+        return Objects.equal(contents, that.contents);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(contents);
     }
 }

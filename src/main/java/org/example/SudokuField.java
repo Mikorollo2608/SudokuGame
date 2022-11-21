@@ -1,5 +1,8 @@
 package org.example;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+
 public class SudokuField {
     private int value = 0;
 
@@ -17,6 +20,24 @@ public class SudokuField {
 
     @Override
     public String toString() {
-        return "Value: %s".formatted(value);
+        return MoreObjects.toStringHelper(this)
+                .add("value", value)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SudokuField that)) {
+            return false;
+        }
+        return value == that.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
     }
 }
