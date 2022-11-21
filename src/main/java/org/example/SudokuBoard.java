@@ -86,4 +86,22 @@ public class SudokuBoard {
         return true;
     }
 
+    @Override
+    public String toString() {
+        String temp = "";
+        for (int j = 0; j < 9; j++) {
+            for (int k = 0; k < 9; k++) {
+                temp = temp.concat(Integer.toString(board.get(j * 9 + k).getFieldValue()));
+                temp = temp.concat(" ");
+                if (k == 2 || k == 5) {
+                    temp = temp.concat("| ");
+                }
+            }
+            temp = temp.concat("\n");
+            if (j == 2 || j == 5) {
+                temp = temp.concat("---------------------\n");
+            }
+        }
+        return temp;
+    }
 }

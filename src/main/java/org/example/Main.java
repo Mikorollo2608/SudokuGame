@@ -5,8 +5,9 @@ import java.util.List;
 
 class Main {
     public static void main(String[] args) {
-        SudokuStructure sudokuStructure = new SudokuStructure();
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        sudokuBoard.solveGame();
 
-        System.out.println(sudokuStructure.toString());
+        System.out.println(sudokuBoard.toString());
     }
 }
