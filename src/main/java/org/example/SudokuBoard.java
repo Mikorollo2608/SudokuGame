@@ -2,10 +2,12 @@ package org.example;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class SudokuBoard {
+public class SudokuBoard implements Serializable {
     private List<SudokuField> board = Arrays.asList(new SudokuField[81]);
 
     private SudokuSolver sudokuSolver;
