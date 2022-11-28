@@ -1,5 +1,6 @@
 package org.example;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -75,7 +76,7 @@ public class FileSudokuBoardDaoTest {
         sudokuBoardDao.write(sudokuBoard);
         try {
             File file = new File("!@#%$^(&*");
-            assertTrue(!file.exists());
+            assertFalse(file.exists());
         } catch (Exception e) {
             System.out.println("Exception!");
         }

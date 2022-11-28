@@ -41,6 +41,6 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
     }
 }
