@@ -8,16 +8,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class FileSudokuBoardDao implements Dao<SudokuBoard> {
-
-    private final String path;
     private FileInputStream fileIn;
     private FileOutputStream fileOut;
 
-
     FileSudokuBoardDao(String path) {
-        this.path = path;
         File file = new File(path);
         try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
             fileIn = new FileInputStream(file);
             fileOut = new FileOutputStream(file);
         } catch (IOException e) {

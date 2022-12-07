@@ -3,6 +3,7 @@ package org.example;
 import static org.example.SudokuBoardDaoFactory.getFileDao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,10 +27,15 @@ public class FileSudokuBoardDaoTest {
             SudokuBoard sudokuBoard1 = sudokuBoardDao.read();
             assertEquals(sudokuBoard1, sudokuBoard);
 
-            Files.deleteIfExists(Paths.get("testBoard.txt"));
         } catch (NoSuchFileException e) {
             System.err.format("No such file");
         } catch (Exception e) {
+            System.err.println(e);
+        }
+
+        try {
+            Files.deleteIfExists(Paths.get("testBoard.txt"));
+        } catch (IOException e) {
             System.err.println(e);
         }
     }
@@ -40,11 +46,16 @@ public class FileSudokuBoardDaoTest {
         SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
         assertEquals(sudokuBoard, sudokuBoardDao.read());
 
-        Files.deleteIfExists(Paths.get("testBoard.txt"));
         } catch (NoSuchFileException e) {
-        System.err.format("No such file");
+            System.err.format("No such file");
         } catch (Exception e) {
-        System.err.println(e);
+            System.err.println(e);
+        }
+
+        try {
+            Files.deleteIfExists(Paths.get("NotExistingFile.txt"));
+        } catch (Exception e) {
+            System.err.println(e);
         }
     }
 
@@ -67,8 +78,6 @@ public class FileSudokuBoardDaoTest {
 
         try {
             Files.deleteIfExists(Paths.get("testBoard.txt"));
-        } catch (NoSuchFileException e) {
-            System.err.format("No such file");
         } catch (IOException e) {
             System.err.println(e);
         }
@@ -84,5 +93,12 @@ public class FileSudokuBoardDaoTest {
         } catch (Exception e) {
             System.out.println("Exception!");
         }
+    }
+
+    //??hmmm
+    @Test
+    void sudokuBoardDaoFactoryTest() {
+        SudokuBoardDaoFactory sudokuBoardDaoFactory = new SudokuBoardDaoFactory();
+        assertNotNull(sudokuBoardDaoFactory);
     }
 }
