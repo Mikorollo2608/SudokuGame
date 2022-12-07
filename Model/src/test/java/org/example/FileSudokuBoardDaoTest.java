@@ -1,7 +1,8 @@
 package org.example;
 
+import static org.example.SudokuBoardDaoFactory.getFileDao;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,48 +17,53 @@ import org.junit.jupiter.api.Test;
 public class FileSudokuBoardDaoTest {
     @Test
     void readWriteSuccessfulTest() {
-        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        SudokuBoardDaoFactory sudokuBoardDaoFactory = new SudokuBoardDaoFactory();
-        Dao<SudokuBoard> sudokuBoardDao = sudokuBoardDaoFactory.getFileDao("testBoard.txt");
+        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao("testBoard.txt")) {
+            SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
 
-        sudokuBoard.solveGame();
-        sudokuBoardDao.write(sudokuBoard);
+            sudokuBoard.solveGame();
+            sudokuBoardDao.write(sudokuBoard);
 
-        SudokuBoard sudokuBoard1 = sudokuBoardDao.read();
-        assertTrue(sudokuBoard1.equals(sudokuBoard));
+            SudokuBoard sudokuBoard1 = sudokuBoardDao.read();
+            assertEquals(sudokuBoard1, sudokuBoard);
 
-        try {
             Files.deleteIfExists(Paths.get("testBoard.txt"));
         } catch (NoSuchFileException e) {
             System.err.format("No such file");
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println(e);
         }
-
     }
 
     @Test
     void readIoExceptionTest() {
-        SudokuBoardDaoFactory sudokuBoardDaoFactory = new SudokuBoardDaoFactory();
-        Dao<SudokuBoard> sudokuBoardDao = sudokuBoardDaoFactory.getFileDao("NotExisitingFile.txt");
+        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao("NotExistingFile.txt")) {
         SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        assertTrue(sudokuBoard.equals(sudokuBoardDao.read()));
+        assertEquals(sudokuBoard, sudokuBoardDao.read());
+
+        Files.deleteIfExists(Paths.get("testBoard.txt"));
+        } catch (NoSuchFileException e) {
+        System.err.format("No such file");
+        } catch (Exception e) {
+        System.err.println(e);
+        }
     }
 
     @Test
     void readOtherExceptionTest() {
-        try (FileOutputStream file = new FileOutputStream(new File("testBoard.txt"))) {
+        try (FileOutputStream file = new FileOutputStream(new File("testBoard.txt"));
+             Dao<SudokuBoard> sudokuBoardDao = getFileDao("testBoard.txt")) {
             String obj = "test";
             ObjectOutputStream outObj = new ObjectOutputStream(file);
             outObj.writeObject(obj);
+
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertEquals(sudokuBoard, sudokuBoardDao.read());
+
         } catch (IOException e) {
             System.out.println("IOException!");
+        } catch (Exception e) {
+            System.out.println("Exception!");
         }
-
-        SudokuBoardDaoFactory sudokuBoardDaoFactory = new SudokuBoardDaoFactory();
-        Dao<SudokuBoard> sudokuBoardDao = sudokuBoardDaoFactory.getFileDao("testBoard.txt");
-        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        assertTrue(sudokuBoard.equals(sudokuBoardDao.read()));
 
         try {
             Files.deleteIfExists(Paths.get("testBoard.txt"));
@@ -70,11 +76,9 @@ public class FileSudokuBoardDaoTest {
 
     @Test
     void writeIoExceptionTest() {
-        SudokuBoardDaoFactory sudokuBoardDaoFactory = new SudokuBoardDaoFactory();
-        Dao<SudokuBoard> sudokuBoardDao = sudokuBoardDaoFactory.getFileDao("!@#%$^(&*");
-        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        sudokuBoardDao.write(sudokuBoard);
-        try {
+        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao("!@#%$^(&*")) {
+            SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+            sudokuBoardDao.write(sudokuBoard);
             File file = new File("!@#%$^(&*");
             assertFalse(file.exists());
         } catch (Exception e) {

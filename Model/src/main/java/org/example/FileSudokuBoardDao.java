@@ -10,37 +10,51 @@ import java.io.ObjectOutputStream;
 public class FileSudokuBoardDao implements Dao<SudokuBoard> {
 
     private final String path;
+    private FileInputStream fileIn;
+    private FileOutputStream fileOut;
+
 
     FileSudokuBoardDao(String path) {
         this.path = path;
+        File file = new File(path);
+        try {
+            fileIn = new FileInputStream(file);
+            fileOut = new FileOutputStream(file);
+        } catch (IOException e) {
+            System.out.println("Constructing IOException!");
+        }
     }
 
     @Override
     public SudokuBoard read() {
         SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        try (FileInputStream file = new FileInputStream(new File(path))) {
-            ObjectInputStream inObj = new ObjectInputStream(file);
+        try (ObjectInputStream inObj = new ObjectInputStream(fileIn)) {
             sudokuBoard = (SudokuBoard) inObj.readObject();
 
         } catch (IOException e) {
-            System.out.println("IOException!");
+            System.out.println("Reading IOException!");
         } catch (Exception e) {
-            System.out.println("Other Exception!");
+            System.out.println("Reading other Exception!");
         }
         return sudokuBoard;
     }
 
     @Override
     public void write(SudokuBoard obj) {
-        try (FileOutputStream file = new FileOutputStream(new File(path))) {
-            ObjectOutputStream outObj = new ObjectOutputStream(file);
+        try (ObjectOutputStream outObj = new ObjectOutputStream(fileOut)) {
             outObj.writeObject(obj);
         } catch (IOException e) {
-            System.out.println("IOException!");
+            System.out.println("Write IOException!");
         }
     }
 
     @Override
     public void close() {
+        try {
+            fileIn.close();
+            fileOut.close();
+        } catch (IOException e) {
+            System.out.println("Closing IOException!");
+        }
     }
 }
