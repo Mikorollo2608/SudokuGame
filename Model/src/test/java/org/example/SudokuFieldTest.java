@@ -3,6 +3,8 @@ package org.example;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -75,5 +77,49 @@ class SudokuFieldTest {
         sudokuField.setFieldValue(2);
 
         assertNotEquals(sudokuField.hashCode(), hashCode);
+    }
+
+    @Test
+    void cloneTest() {
+        SudokuField f1 = new SudokuField();
+
+        f1.setFieldValue(5);
+        try {
+            SudokuField f2 = (SudokuField) f1.clone();
+
+            assertNotNull(f2);
+            assertNotSame(f1, f2);
+            assertEquals(f1.getClass(), f2.getClass());
+            assertEquals(f1, f2);
+
+            f2.setFieldValue(9);
+
+            assertEquals(f1.getFieldValue(), 5);
+            assertEquals(f2.getFieldValue(), 9);
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Error");
+        }
+    }
+
+    @Test
+    void compareToTest() {
+        try {
+            SudokuField f1 = new SudokuField();
+            f1.setFieldValue(5);
+            SudokuField f2 = new SudokuField();
+            f2.setFieldValue(7);
+            SudokuField f3 = new SudokuField();
+            f3.setFieldValue(5);
+            SudokuField f4 = new SudokuField();
+            f4.setFieldValue(2);
+
+            assertTrue(f1.compareTo(f2) < 0);
+            assertEquals(0, f1.compareTo(f3));
+            assertTrue(f1.compareTo(f4) > 0);
+
+            f1.compareTo(null);
+        } catch (NullPointerException e) {
+            System.err.println(e);
+        }
     }
 }

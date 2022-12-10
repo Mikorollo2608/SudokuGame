@@ -3,6 +3,8 @@ package org.example;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -10,7 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-
 
 class SudokuStructureTest {
 
@@ -141,4 +142,35 @@ class SudokuStructureTest {
         assertNotEquals(sudokuStructure.hashCode(), hashCode);
     }
 
+    @Test
+    void cloneTest() {
+        SudokuField sudokuField = new SudokuField();
+        sudokuField.setFieldValue(8);
+        SudokuField sudokuField2 = new SudokuField();
+        sudokuField2.setFieldValue(4);
+        SudokuField sudokuField3 = new SudokuField();
+        sudokuField3.setFieldValue(1);
+
+        SudokuStructure sudokuStructure = new SudokuStructure();
+        sudokuStructure.setContents(sudokuField3,8);
+
+        try {
+            SudokuStructure structureClone = (SudokuStructure) sudokuStructure.clone();
+
+            assertNotNull(structureClone);
+            assertNotSame(sudokuStructure, structureClone);
+            assertEquals(sudokuStructure.getClass(), structureClone.getClass());
+            assertEquals(sudokuStructure, structureClone);
+
+            //Check if it is a deep copy
+            sudokuStructure.setContents(sudokuField,1);
+            structureClone.setContents(sudokuField2,1);
+
+            assertEquals(sudokuStructure.get(1).getFieldValue(), 8);
+            assertEquals(structureClone.get(1).getFieldValue(), 4);
+
+        } catch (CloneNotSupportedException e) {
+            System.err.println(e);
+        }
+    }
 }

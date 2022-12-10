@@ -3,10 +3,12 @@ package org.example;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class SudokuBoard implements Serializable {
+public class SudokuBoard implements Serializable, Cloneable {
     private List<SudokuField> board = Arrays.asList(new SudokuField[81]);
 
     private SudokuSolver sudokuSolver;
@@ -124,5 +126,17 @@ public class SudokuBoard implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(board, sudokuSolver);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        SudokuBoard sudokuBoardClone = (SudokuBoard) super.clone();
+        sudokuBoardClone.board = new ArrayList<>(this.board);
+        sudokuSolver = new BacktrackingSudokuSolver();
+
+        ///TODO
+        //sudokuBoardClone.sudokuSolver =
+        //fix this clone() method :(
+        return sudokuBoardClone;
     }
 }

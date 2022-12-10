@@ -42,7 +42,7 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
     public void write(SudokuBoard obj) {
         try (ObjectOutputStream outObj = new ObjectOutputStream(fileOut)) {
             outObj.writeObject(obj);
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Write IOException!");
         }
     }
@@ -52,7 +52,7 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
         try {
             fileIn.close();
             fileOut.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Closing IOException!");
         }
     }

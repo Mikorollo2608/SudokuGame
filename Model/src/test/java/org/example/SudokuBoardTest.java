@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -520,4 +521,28 @@ class SudokuBoardTest {
         assertEquals(sudokuBoard1.hashCode(), sudokuBoard2.hashCode());
     }
 
+    @Test
+    void cloneTest() {
+        SudokuSolver solver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(solver);
+        sudokuBoard.solveGame();
+
+        try {
+            SudokuBoard sudokuBoardClone = (SudokuBoard) sudokuBoard.clone();
+
+            assertNotNull(sudokuBoardClone);
+            assertNotSame(sudokuBoard, sudokuBoardClone);
+            assertEquals(sudokuBoard.getClass(), sudokuBoardClone.getClass());
+            assertEquals(sudokuBoard, sudokuBoardClone);
+
+            sudokuBoardClone.solveGame();
+
+            //assertNotEquals(sudokuBoard, sudokuBoardClone);
+            System.out.println(sudokuBoard);
+            System.out.println(sudokuBoardClone);
+
+        } catch (CloneNotSupportedException e) {
+            System.err.println(e);
+        }
+    }
 }

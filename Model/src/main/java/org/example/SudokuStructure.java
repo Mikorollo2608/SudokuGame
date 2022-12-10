@@ -2,10 +2,13 @@ package org.example;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SudokuStructure {
+
+public class SudokuStructure implements Serializable, Cloneable {
     private List<SudokuField> contents = Arrays.asList(new SudokuField[9]);
 
     public void setContents(SudokuField field, int index) {
@@ -51,4 +54,19 @@ public class SudokuStructure {
     public int hashCode() {
         return Objects.hashCode(contents);
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        SudokuStructure structureClone = (SudokuStructure) super.clone();
+        structureClone.contents = new ArrayList<>(this.contents);
+
+        return structureClone;
+    }
 }
+
+//    private void setAllContents(List<SudokuField> contest) {
+//        this.contents = contest;
+//    }
+
+///TODO
+// PROTECTED CZY PUBLIC ?
