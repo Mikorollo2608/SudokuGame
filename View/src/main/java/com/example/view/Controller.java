@@ -1,24 +1,35 @@
 package com.example.view;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+//import org.example.model.SudokuBoard;
 
 public class Controller {
-    @FXML
-    private Label level;
 
-    @FXML
-    protected void onEasyButtonClick() {
-        level.setText("1");
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    //private SudokuBoard sudokuBoard;
+
+    public void switchToSudokuBoardScene(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("sudokuBoardScene.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    @FXML
-    protected void onMediumButtonClick() {
-        level.setText("2");
-    }
-
-    @FXML
-    protected void onHardButtonClick() {
-        level.setText("3");
+    public void switchToChooseLevelScene(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("chooseLevelScene.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.view.Controller">
+   <children>
+      <Label layoutX="266.0" layoutY="14.0" text="Sudoku">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="returnButton" layoutX="534.0" layoutY="16.0" mnemonicParsing="false" onAction="#switchToChooseLevelScene" text="Return" />
+      <TextArea layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>
