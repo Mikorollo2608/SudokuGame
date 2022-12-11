@@ -166,8 +166,8 @@ class SudokuStructureTest {
             sudokuStructure.setContents(sudokuField,1);
             structureClone.setContents(sudokuField2,1);
 
-            assertEquals(sudokuStructure.get(1).getFieldValue(), 8);
-            assertEquals(structureClone.get(1).getFieldValue(), 4);
+            assertEquals(8, sudokuStructure.get(1).getFieldValue());
+            assertEquals(4, structureClone.get(1).getFieldValue());
 
         } catch (CloneNotSupportedException e) {
             System.err.println(e);

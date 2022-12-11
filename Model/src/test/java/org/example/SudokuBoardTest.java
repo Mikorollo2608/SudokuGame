@@ -525,7 +525,6 @@ class SudokuBoardTest {
     void cloneTest() {
         SudokuSolver solver = new BacktrackingSudokuSolver();
         SudokuBoard sudokuBoard = new SudokuBoard(solver);
-        sudokuBoard.solveGame();
 
         try {
             SudokuBoard sudokuBoardClone = (SudokuBoard) sudokuBoard.clone();
@@ -537,9 +536,7 @@ class SudokuBoardTest {
 
             sudokuBoardClone.solveGame();
 
-            //assertNotEquals(sudokuBoard, sudokuBoardClone);
-            System.out.println(sudokuBoard);
-            System.out.println(sudokuBoardClone);
+            assertNotEquals(sudokuBoard, sudokuBoardClone);
 
         } catch (CloneNotSupportedException e) {
             System.err.println(e);
