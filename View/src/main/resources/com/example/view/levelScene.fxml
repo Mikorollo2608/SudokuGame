@@ -12,9 +12,9 @@
                <font>
                   <Font size="28.0" />
                </font></Label>
-            <Button fx:id="easyButton" layoutX="339.0" layoutY="100.0" mnemonicParsing="false" onAction="#switchToSudokuBoardScene" text="Easy" />
-            <Button fx:id="mediumButton" alignment="CENTER" layoutX="328.0" layoutY="165.0" mnemonicParsing="false" text="Medium" />
-            <Button fx:id="hardButton" layoutX="337.0" layoutY="236.0" mnemonicParsing="false" text="Hard" />
+            <Button fx:id="easyButton" layoutX="339.0" layoutY="100.0" mnemonicParsing="false" onAction="#pressedEasyButton" text="Easy" />
+            <Button fx:id="mediumButton" alignment="CENTER" layoutX="328.0" layoutY="165.0" mnemonicParsing="false" onAction="#pressedMediumButton" text="Medium" />
+            <Button fx:id="hardButton" layoutX="337.0" layoutY="236.0" mnemonicParsing="false" onAction="#pressedHardButton" text="Hard" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
