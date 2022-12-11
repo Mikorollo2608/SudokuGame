@@ -3,9 +3,7 @@ package org.example;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class SudokuBoard implements Serializable, Cloneable {
@@ -129,14 +127,20 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         SudokuBoard sudokuBoardClone = (SudokuBoard) super.clone();
-        sudokuBoardClone.board = new ArrayList<>(this.board);
-        sudokuSolver = new BacktrackingSudokuSolver();
+        sudokuBoardClone.board = Arrays.asList(new SudokuField[81]);
 
-        ///TODO
-        //sudokuBoardClone.sudokuSolver =
-        //fix this clone() method :(
+        for (int i = 0; i < 81; i++) {
+            sudokuBoardClone.board.set(i, new SudokuField());
+            sudokuBoardClone.board.get(i).setFieldValue(0);
+        }
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoardClone.set(i, j, this.get(i, j));
+            }
+        }
         return sudokuBoardClone;
     }
 }

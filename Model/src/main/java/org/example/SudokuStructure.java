@@ -56,17 +56,14 @@ public class SudokuStructure implements Serializable, Cloneable {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         SudokuStructure structureClone = (SudokuStructure) super.clone();
-        structureClone.contents = new ArrayList<>(this.contents);
-
+        structureClone.contents = Arrays.asList(new SudokuField[9]);
+        for (int i = 0; i < 9; i++) {
+            if (this.get(i) != null) {
+                structureClone.setContents((SudokuField) this.get(i).clone(), i);
+            }
+        }
         return structureClone;
     }
 }
-
-//    private void setAllContents(List<SudokuField> contest) {
-//        this.contents = contest;
-//    }
-
-///TODO
-// PROTECTED CZY PUBLIC ?

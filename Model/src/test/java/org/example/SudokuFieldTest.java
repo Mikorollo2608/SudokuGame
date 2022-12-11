@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -103,23 +104,21 @@ class SudokuFieldTest {
 
     @Test
     void compareToTest() {
-        try {
-            SudokuField f1 = new SudokuField();
-            f1.setFieldValue(5);
-            SudokuField f2 = new SudokuField();
-            f2.setFieldValue(7);
-            SudokuField f3 = new SudokuField();
-            f3.setFieldValue(5);
-            SudokuField f4 = new SudokuField();
-            f4.setFieldValue(2);
+        SudokuField f1 = new SudokuField();
+        f1.setFieldValue(5);
+        SudokuField f2 = new SudokuField();
+        f2.setFieldValue(7);
+        SudokuField f3 = new SudokuField();
+        f3.setFieldValue(5);
+        SudokuField f4 = new SudokuField();
+        f4.setFieldValue(2);
 
-            assertTrue(f1.compareTo(f2) < 0);
-            assertEquals(0, f1.compareTo(f3));
-            assertTrue(f1.compareTo(f4) > 0);
+        assertTrue(f1.compareTo(f2) < 0);
+        assertEquals(0, f1.compareTo(f3));
+        assertTrue(f1.compareTo(f4) > 0);
 
+        assertThrows(NullPointerException.class, () -> {
             f1.compareTo(null);
-        } catch (NullPointerException e) {
-            System.err.println(e);
-        }
+        });
     }
 }
