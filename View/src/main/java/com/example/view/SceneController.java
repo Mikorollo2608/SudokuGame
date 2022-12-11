@@ -7,15 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//import org.example.model.SudokuBoard;
 
-public class Controller {
+
+public class SceneController {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-    //private SudokuBoard sudokuBoard;
 
     public void switchToSudokuBoardScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("sudokuBoardScene.fxml"));
@@ -25,11 +23,4 @@ public class Controller {
         stage.show();
     }
 
-    public void switchToChooseLevelScene(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("chooseLevelScene.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 }
