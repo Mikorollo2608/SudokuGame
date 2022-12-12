@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.example.BacktrackingSudokuSolver;
-import org.example.Difficulty;
 import org.example.SudokuBoard;
 
 public class DisplaySudokuController {

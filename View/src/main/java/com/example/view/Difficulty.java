@@ -1,4 +1,6 @@
-package org.example;
+package com.example.view;
+
+import org.example.SudokuBoard;
 
 import java.util.ArrayList;
 import java.util.Collections;
