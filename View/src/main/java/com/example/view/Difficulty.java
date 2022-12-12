@@ -1,10 +1,9 @@
 package com.example.view;
 
-import org.example.SudokuBoard;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.example.SudokuBoard;
 
 public enum Difficulty {
     EASY(18), MEDIUM(36), HARD(54);

@@ -1,10 +1,10 @@
 package org.example;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class RepositoryTest {
     @Test
@@ -13,6 +13,7 @@ public class RepositoryTest {
             Repository repository = new Repository(null);
         });
     }
+
     @Test
     public void createInstanceTest() {
         SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
