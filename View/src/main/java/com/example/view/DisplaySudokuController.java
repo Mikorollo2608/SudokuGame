@@ -2,7 +2,6 @@ package com.example.view;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -13,7 +12,7 @@ public class DisplaySudokuController {
 
     private SudokuBoard sudokuBoard;
 
-    private TextField[] textFields;
+    private SudokuTextField[] textFields;
 
     private Difficulty chosenLevel;
     @FXML
@@ -21,7 +20,7 @@ public class DisplaySudokuController {
 
     public DisplaySudokuController() {
         sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        textFields = new TextField[81];
+        textFields = new SudokuTextField[81];
     }
 
     public void display(Difficulty lvl) {
@@ -31,15 +30,20 @@ public class DisplaySudokuController {
         int i = 0;
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-                if (sudokuBoard.get(row, col) == 0) {
-                    i++;
-                    continue;
-                }
-                textFields[i] = new TextField();
+                textFields[i] = new SudokuTextField();
                 textFields[i].setAlignment(Pos.CENTER);
                 textFields[i].setFont(Font.font("Verdana", FontWeight.BOLD, 36));
-                textFields[i].setEditable(false);
-                textFields[i].setText(Integer.toString(sudokuBoard.get(row, col)));
+                if (sudokuBoard.get(row, col) == 0) {
+                    textFields[i].setText("");
+
+                    textFields[i].textProperty().addListener((observable, oldValue, newValue) -> {
+                        System.out.println("textfield changed from " + oldValue + " to " + newValue);
+                    });
+
+                } else {
+                    textFields[i].setEditable(false);
+                    textFields[i].setText(Integer.toString(sudokuBoard.get(row, col)));
+                }
                 grid.add(textFields[i], col, row, 1, 1);
                 i++;
             }
