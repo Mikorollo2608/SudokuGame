@@ -2,6 +2,8 @@ package org.example;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +13,8 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     private SudokuSolver sudokuSolver;
 
+    private PropertyChangeSupport support;
+
     public SudokuBoard(SudokuSolver newSudokuSolver) {
         sudokuSolver = newSudokuSolver;
 
@@ -19,6 +23,8 @@ public class SudokuBoard implements Serializable, Cloneable {
             board.set(i, new SudokuField());
             board.get(i).setFieldValue(0);
         }
+
+        support = new PropertyChangeSupport(this);
     }
 
     /**
@@ -33,7 +39,9 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public void set(int row, int col, int val) {
+        int tmp = board.get(row * 9 + col).getFieldValue();
         board.get(row * 9 + col).setFieldValue(val);
+        support.fireIndexedPropertyChange("sudokuBoard",row * 9 + col,tmp, val);
     }
 
     public void solveGame() {
@@ -142,5 +150,13 @@ public class SudokuBoard implements Serializable, Cloneable {
             }
         }
         return sudokuBoardClone;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
 }
