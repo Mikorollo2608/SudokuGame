@@ -15,7 +15,6 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
     private FileOutputStream fileOut;
 
     FileSudokuBoardDao(String path) {
-        logger.info("Opening file");
         File file = new File(path);
         try {
             if (!file.exists()) {
@@ -30,7 +29,6 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
 
     @Override
     public SudokuBoard read() {
-        logger.info("Reading from file");
         SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
         try (ObjectInputStream inObj = new ObjectInputStream(fileIn)) {
             sudokuBoard = (SudokuBoard) inObj.readObject();
@@ -45,7 +43,6 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
 
     @Override
     public void write(SudokuBoard obj) {
-        logger.info("Writing to file");
         try (ObjectOutputStream outObj = new ObjectOutputStream(fileOut)) {
             outObj.writeObject(obj);
         } catch (Exception e) {
@@ -55,7 +52,6 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
 
     @Override
     public void close() {
-        logger.info("Closing a file");
         try {
             fileIn.close();
             fileOut.close();

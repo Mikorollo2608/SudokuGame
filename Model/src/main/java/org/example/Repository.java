@@ -8,7 +8,6 @@ public class Repository {
     private final SudokuBoard sudokuBoard;
 
     public Repository(SudokuBoard sudokuBoard) {
-        logger.info("Creating new Repository");
         if (sudokuBoard == null) {
             logger.error("Null not allowed");
             throw new IllegalArgumentException("Null value");
@@ -17,7 +16,6 @@ public class Repository {
     }
 
     public SudokuBoard createInstance() {
-        logger.info("Creating new SudokuBoard from Repository");
         try {
             return (SudokuBoard) sudokuBoard.clone();
         } catch (CloneNotSupportedException e) {

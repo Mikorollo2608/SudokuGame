@@ -7,15 +7,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
-import org.apache.log4j.Logger;
 
 public class BacktrackingSudokuSolver implements SudokuSolver {
 
-    private static final Logger logger = Logger.getLogger(BacktrackingSudokuSolver.class.getName());
-
     @Override
     public void solve(SudokuBoard board) {
-        logger.info("Created new BacktrackingSudokuSolver");
         //shuffle the priorities of numbers
         List<Integer> numbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
         Collections.shuffle(numbers);

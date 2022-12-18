@@ -7,11 +7,9 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import org.apache.log4j.Logger;
 
 public class SudokuBoard implements Serializable, Cloneable {
 
-    private static final Logger logger = Logger.getLogger(SudokuBoard.class.getName());
     private List<SudokuField> board = Arrays.asList(new SudokuField[81]);
 
     private SudokuSolver sudokuSolver;
@@ -19,7 +17,6 @@ public class SudokuBoard implements Serializable, Cloneable {
     private PropertyChangeSupport support;
 
     public SudokuBoard(SudokuSolver newSudokuSolver) {
-        logger.info("Creating new SudokuBoard");
         sudokuSolver = newSudokuSolver;
 
         //initialize the board with 0
@@ -39,24 +36,20 @@ public class SudokuBoard implements Serializable, Cloneable {
      * @return Asked for cell
      */
     public int get(int row, int col) {
-        logger.trace("Trying to retrieve value of field: " + row + ", " + col);
         return board.get(row * 9 + col).getFieldValue();
     }
 
     public void set(int row, int col, int val) {
-        logger.trace("Trying to set field: " + row + ", " + col + " to: " + val);
         int tmp = board.get(row * 9 + col).getFieldValue();
         board.get(row * 9 + col).setFieldValue(val);
         support.fireIndexedPropertyChange("sudokuBoard",row * 9 + col,tmp, val);
     }
 
     public void solveGame() {
-        logger.info("Solving board");
         sudokuSolver.solve(this);
     }
 
     public SudokuRow getRow(int row) {
-        logger.trace("Trying to retrieve row: " + row);
         SudokuRow sudokuRow = new SudokuRow();
         for (int i = 0; i < 9; i++) {
             sudokuRow.setContents(board.get(row * 9 + i), i);
@@ -65,7 +58,6 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public SudokuColumn getColumn(int column) {
-        logger.trace("Trying to retrieve column: " + column);
         SudokuColumn sudokuColumn = new SudokuColumn();
         for (int i = 0; i < 9; i++) {
             sudokuColumn.setContents(board.get(i * 9 + column), i);
@@ -74,7 +66,6 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public SudokuBox getBox(int row, int column) {
-        logger.trace("Trying to retrieve box: " + row + ", " + column);
         SudokuBox sudokuBox = new SudokuBox();
         int index = 0;
         for (int i = row - row % 3; i < (row - row % 3) + 3; i++) {
@@ -87,7 +78,6 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     boolean checkBoard() {
-        logger.info("Checking board");
         for (int i = 0; i < 9; i++) {
             if (!getRow(i).verify()) {
                 return false;
@@ -147,7 +137,6 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        logger.debug("Cloning SudokuBoard");
         SudokuBoard sudokuBoardClone = (SudokuBoard) super.clone();
         sudokuBoardClone.board = Arrays.asList(new SudokuField[81]);
 
