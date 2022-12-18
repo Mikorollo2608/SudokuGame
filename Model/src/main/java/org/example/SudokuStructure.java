@@ -5,17 +5,22 @@ import com.google.common.base.Objects;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 
 public class SudokuStructure implements Serializable, Cloneable {
+
+    private static final Logger logger = Logger.getLogger(SudokuStructure.class.getName());
     private List<SudokuField> contents = Arrays.asList(new SudokuField[9]);
 
     public void setContents(SudokuField field, int index) {
+        logger.trace("Setting field: " + index + " to: " + field.getFieldValue());
         contents.set(index, new SudokuField());
         contents.get(index).setFieldValue(field.getFieldValue());
     }
 
     public SudokuField get(int index) {
+        logger.trace("Trying to retrieve value of field: " + index);
         return contents.get(index);
     }
 
@@ -56,6 +61,7 @@ public class SudokuStructure implements Serializable, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
+        logger.info("Cloning SudokuStructure");
         SudokuStructure structureClone = (SudokuStructure) super.clone();
         structureClone.contents = Arrays.asList(new SudokuField[9]);
         for (int i = 0; i < 9; i++) {

@@ -5,6 +5,7 @@ import com.google.common.base.Objects;
 import java.io.Serializable;
 
 public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
+
     private int value = 0;
 
     public int getFieldValue() {
