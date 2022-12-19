@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
+import org.example.exceptions.CloningException;
 import org.example.exceptions.NullArgumentException;
 import org.example.exceptions.OutOfBoundsException;
 import org.junit.jupiter.api.Test;
@@ -293,6 +293,31 @@ class SudokuBoardTest {
     }
 
     @Test
+    void getBoxOutOfBoundTest() {
+        BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
+        sudokuBoard.solveGame();
+
+        List<SudokuField> values = Arrays.asList(new SudokuField[9]);
+
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.getBox(-1, 1);
+        });
+
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.getBox(1, -1);
+        });
+
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.getBox(9, 1);
+        });
+
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.getBox(1, 9);
+        });
+    }
+
+    @Test
     void checkBoardTest() {
         BacktrackingSudokuSolver backtrackingSudokuSolver = new BacktrackingSudokuSolver();
         SudokuBoard sudokuBoard = new SudokuBoard(backtrackingSudokuSolver);
@@ -495,6 +520,17 @@ class SudokuBoardTest {
     }
 
     @Test
+    void cloneExceptionTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+
+        assertThrows(CloningException.class, () -> {
+            SudokuBoard sudokuBoardClone = (SudokuBoard) sudokuBoard.clone();
+            throw new CloningException("");
+        });
+
+    }
+
+    @Test
     void hashCodeTestSameTypeDiffValues() {
         BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
         SudokuBoard sudokuBoard1 = new SudokuBoard(solver);
@@ -543,7 +579,7 @@ class SudokuBoardTest {
             assertNotEquals(sudokuBoard, sudokuBoardClone);
 
         } catch (CloneNotSupportedException e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -627,5 +663,22 @@ class SudokuBoardTest {
         });
     }
 
+    @Test
+    public void listenerNullTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        SudokuBoardListener sbl = new SudokuBoardListener(sudokuBoard);
+
+        assertNotNull(sbl);
+        assertThrows(NullArgumentException.class, () -> {
+            sudokuBoard.addPropertyChangeListener(null);
+        });
+
+        assertThrows(NullArgumentException.class, () -> {
+            sudokuBoard.removePropertyChangeListener(null);
+        });
+
+        sudokuBoard.addPropertyChangeListener(sbl);
+        sudokuBoard.removePropertyChangeListener(sbl);
+    }
 
 }
