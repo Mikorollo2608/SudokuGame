@@ -3,8 +3,13 @@ package org.example;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import java.io.Serializable;
+import java.util.ResourceBundle;
+import org.example.exceptions.CloningException;
+import org.example.exceptions.NullArgumentException;
 
 public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
+
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
 
     private int value = 0;
 
@@ -44,14 +49,18 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public Object clone() throws CloningException {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CloningException(resourceBundle.getString("CloningExceptionSudokuField"));
+        }
     }
 
     @Override
-    public int compareTo(SudokuField s) throws NullPointerException {
+    public int compareTo(SudokuField s) throws NullArgumentException {
         if (s == null) {
-            throw new NullPointerException();
+            throw new NullArgumentException(resourceBundle.getString("NullArgumentException"));
         }
         return Integer.compare(this.value, s.getFieldValue());
     }

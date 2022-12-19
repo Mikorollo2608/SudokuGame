@@ -7,8 +7,14 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
+import org.example.exceptions.CloningException;
+import org.example.exceptions.NullArgumentException;
+import org.example.exceptions.OutOfBoundsException;
 
 public class SudokuBoard implements Serializable, Cloneable {
+
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
 
     private List<SudokuField> board = Arrays.asList(new SudokuField[81]);
 
@@ -16,7 +22,12 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     private PropertyChangeSupport support;
 
-    public SudokuBoard(SudokuSolver newSudokuSolver) {
+    public SudokuBoard(SudokuSolver newSudokuSolver) throws NullArgumentException {
+
+        if (newSudokuSolver == null) {
+            throw new NullArgumentException(resourceBundle.getString("NullArgumentException"));
+        }
+
         sudokuSolver = newSudokuSolver;
 
         //initialize the board with 0
@@ -34,12 +45,21 @@ public class SudokuBoard implements Serializable, Cloneable {
      * @param row Row of the board.
      * @param col Column of the board.
      * @return Asked for cell
+     * @throws OutOfBoundsException When trying to access fields not inside the board
      */
-    public int get(int row, int col) {
-        return board.get(row * 9 + col).getFieldValue();
+    public int get(int row, int col) throws OutOfBoundsException {
+        try {
+            return board.get(row * 9 + col).getFieldValue();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
+        }
+
     }
 
-    public void set(int row, int col, int val) {
+    public void set(int row, int col, int val) throws OutOfBoundsException {
+        if (row < 0 || row > 9 || col < 0 || col > 9) {
+            throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
+        }
         int tmp = board.get(row * 9 + col).getFieldValue();
         board.get(row * 9 + col).setFieldValue(val);
         support.fireIndexedPropertyChange("sudokuBoard",row * 9 + col,tmp, val);
@@ -49,7 +69,10 @@ public class SudokuBoard implements Serializable, Cloneable {
         sudokuSolver.solve(this);
     }
 
-    public SudokuRow getRow(int row) {
+    public SudokuRow getRow(int row) throws OutOfBoundsException {
+        if (row < 0 || row > 9) {
+            throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
+        }
         SudokuRow sudokuRow = new SudokuRow();
         for (int i = 0; i < 9; i++) {
             sudokuRow.setContents(board.get(row * 9 + i), i);
@@ -57,7 +80,10 @@ public class SudokuBoard implements Serializable, Cloneable {
         return sudokuRow;
     }
 
-    public SudokuColumn getColumn(int column) {
+    public SudokuColumn getColumn(int column) throws OutOfBoundsException {
+        if (column < 0 || column > 9) {
+            throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
+        }
         SudokuColumn sudokuColumn = new SudokuColumn();
         for (int i = 0; i < 9; i++) {
             sudokuColumn.setContents(board.get(i * 9 + column), i);
@@ -65,7 +91,10 @@ public class SudokuBoard implements Serializable, Cloneable {
         return sudokuColumn;
     }
 
-    public SudokuBox getBox(int row, int column) {
+    public SudokuBox getBox(int row, int column) throws OutOfBoundsException {
+        if (row < 0 || row > 9 || column < 0 || column > 9) {
+            throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
+        }
         SudokuBox sudokuBox = new SudokuBox();
         int index = 0;
         for (int i = row - row % 3; i < (row - row % 3) + 3; i++) {
@@ -136,8 +165,14 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        SudokuBoard sudokuBoardClone = (SudokuBoard) super.clone();
+    public Object clone() throws CloningException {
+        SudokuBoard sudokuBoardClone;
+        try {
+            sudokuBoardClone = (SudokuBoard) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CloningException(resourceBundle.getString("CloningExceptionSudokuBoard"));
+        }
+
         sudokuBoardClone.board = Arrays.asList(new SudokuField[81]);
 
         for (int i = 0; i < 81; i++) {
@@ -153,11 +188,18 @@ public class SudokuBoard implements Serializable, Cloneable {
         return sudokuBoardClone;
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+    public void addPropertyChangeListener(PropertyChangeListener pcl) throws NullArgumentException {
+        if (pcl == null) {
+            throw new  NullArgumentException(resourceBundle.getString("NullArgumentException"));
+        }
         support.addPropertyChangeListener(pcl);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+    public void removePropertyChangeListener(PropertyChangeListener pcl)
+            throws NullArgumentException {
+        if (pcl == null) {
+            throw new NullArgumentException(resourceBundle.getString("NullArgumentException"));
+        }
         support.removePropertyChangeListener(pcl);
     }
 }

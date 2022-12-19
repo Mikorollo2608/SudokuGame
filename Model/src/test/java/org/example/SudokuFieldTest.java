@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.example.exceptions.NullArgumentException;
 import org.junit.jupiter.api.Test;
 
 class SudokuFieldTest {
@@ -117,7 +118,7 @@ class SudokuFieldTest {
         assertEquals(0, f1.compareTo(f3));
         assertTrue(f1.compareTo(f4) > 0);
 
-        assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullArgumentException.class, () -> {
             f1.compareTo(null);
         });
     }

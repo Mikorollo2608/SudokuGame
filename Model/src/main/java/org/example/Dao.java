@@ -1,7 +1,9 @@
 package org.example;
 
-public interface Dao<T> extends AutoCloseable {
-    T read();
+import org.example.exceptions.DaoException;
 
-    void write(T obj);
+public interface Dao<T> extends AutoCloseable {
+    T read() throws DaoException;
+
+    void write(T obj) throws DaoException;
 }
