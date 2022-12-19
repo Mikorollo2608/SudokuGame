@@ -5,12 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.example.exceptions.CloningException;
+import org.example.exceptions.NullArgumentException;
 import org.junit.jupiter.api.Test;
 
 public class RepositoryTest {
     @Test
     public void constructorNullTest() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(NullArgumentException.class, () -> {
             Repository repository = new Repository(null);
         });
     }

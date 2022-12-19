@@ -57,7 +57,7 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
 
     @Override
     public void write(SudokuBoard obj) throws DaoException {
-        logger.info("Saving to file " + file.getName());
+        logger.info("Saving to " + file.getName());
         try (FileOutputStream fileOut = new FileOutputStream(file);
              ObjectOutputStream outObj = new ObjectOutputStream(fileOut)) {
             outObj.writeObject(obj);

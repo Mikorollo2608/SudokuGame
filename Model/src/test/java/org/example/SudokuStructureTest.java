@@ -5,12 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.example.exceptions.NullArgumentException;
+import org.example.exceptions.OutOfBoundsException;
 import org.junit.jupiter.api.Test;
 
 class SudokuStructureTest {
@@ -173,4 +176,39 @@ class SudokuStructureTest {
             System.err.println(e);
         }
     }
+
+    @Test
+    public void setContentsNullArgumentExceptionTest() {
+        SudokuStructure sudokuStructure = new SudokuStructure();
+        assertThrows(NullArgumentException.class, () -> {
+            sudokuStructure.setContents(null,0);
+        });
+    }
+
+    @Test
+    public void setContentsOutOfBoundsTest() {
+        SudokuStructure sudokuStructure = new SudokuStructure();
+        SudokuField sudokuField = new SudokuField();
+        sudokuField.setFieldValue(9);
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuStructure.setContents(sudokuField,-1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuStructure.setContents(sudokuField,10);
+        });
+    }
+
+    @Test
+    public void getOutOfBoundsTest() {
+        SudokuStructure sudokuStructure = new SudokuStructure();
+        SudokuField sudokuField = new SudokuField();
+        sudokuField.setFieldValue(9);
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuStructure.get(-1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuStructure.get(9);
+        });
+    }
+
 }

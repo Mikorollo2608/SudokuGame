@@ -5,11 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import org.example.exceptions.NullArgumentException;
+import org.example.exceptions.OutOfBoundsException;
 import org.junit.jupiter.api.Test;
 
 class SudokuBoardTest {
@@ -542,4 +546,86 @@ class SudokuBoardTest {
             System.err.println(e);
         }
     }
+
+    @Test
+    public void constructorNullArgumentTest() {
+        assertThrows(NullArgumentException.class, () -> {
+            SudokuBoard sudokuBoard = new SudokuBoard(null);
+        });
+    }
+
+    @Test
+    public void getOutOfBoundsTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertThrows(OutOfBoundsException.class, () -> {
+             sudokuBoard.get(-1,0);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.get(9,0);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.get(0, -1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.get(0, 9);
+        });
+    }
+
+    @Test
+    public void setOutOfBoundsTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.set(-1,0,1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.set(9,0,1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.set(0,-1,1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.set(0,9,1);
+        });
+    }
+
+    @Test
+    public void getRowOutOfBoundsTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.getRow(-1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.getRow(9);
+        });
+    }
+
+    @Test
+    public void getColumnOutOfBoundsTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.getColumn(-1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.getColumn(9);
+        });
+    }
+
+    @Test
+    public void getBoxOutOfBoundsTest() {
+        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.get(-1,0);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.get(9,0);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.get(0, -1);
+        });
+        assertThrows(OutOfBoundsException.class, () -> {
+            sudokuBoard.get(0, 9);
+        });
+    }
+
+
 }
