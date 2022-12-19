@@ -20,11 +20,15 @@ import org.example.BacktrackingSudokuSolver;
 import org.example.Dao;
 import org.example.SudokuBoard;
 import org.example.SudokuBoardListener;
+import org.example.exceptions.CloningException;
+import org.example.exceptions.DaoException;
 
 
 public class DisplaySudokuController {
 
     private SudokuBoard sudokuBoard;
+
+    private SudokuBoard originalSudokuBoard;
 
     private SudokuBoard readSudokuBoard;
 
@@ -61,8 +65,14 @@ public class DisplaySudokuController {
             sudokuBoard.solveGame();
             chosenLevel = lvl;
             chosenLevel.removeFields(sudokuBoard);
+            try {
+                originalSudokuBoard = (SudokuBoard) sudokuBoard.clone();
+            } catch (CloningException e) {
+                throw new RuntimeException(e);
+            }
         }
         sudokuBoard.addPropertyChangeListener(sudokuBoardListener);
+
         int i = 0;
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
@@ -108,10 +118,19 @@ public class DisplaySudokuController {
     }
 
     public void saveToFile() {
-        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao(path.getText())) {
-            sudokuBoardDao.write(sudokuBoard);
+        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao(path.getText());
+             Dao<SudokuBoard> originalSudokuBoardDao = getFileDao("Original_" + path.getText())
+        ) {
+            if (sudokuBoard != null && sudokuBoardDao != null) {
+                sudokuBoardDao.write(sudokuBoard);
+                if (originalSudokuBoard != null && originalSudokuBoardDao != null) {
+                    originalSudokuBoardDao.write(originalSudokuBoard);
+                }
+            }
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
         } catch (Exception e) {
-            System.err.println("Exception!");
+            e.printStackTrace();
         }
     }
 
