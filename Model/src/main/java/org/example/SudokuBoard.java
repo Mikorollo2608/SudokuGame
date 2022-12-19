@@ -14,8 +14,6 @@ import org.example.exceptions.OutOfBoundsException;
 
 public class SudokuBoard implements Serializable, Cloneable {
 
-    ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
-
     private List<SudokuField> board = Arrays.asList(new SudokuField[81]);
 
     private SudokuSolver sudokuSolver;
@@ -23,7 +21,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     private PropertyChangeSupport support;
 
     public SudokuBoard(SudokuSolver newSudokuSolver) throws NullArgumentException {
-
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         if (newSudokuSolver == null) {
             throw new NullArgumentException(resourceBundle.getString("NullArgumentException"));
         }
@@ -48,6 +46,7 @@ public class SudokuBoard implements Serializable, Cloneable {
      * @throws OutOfBoundsException When trying to access fields not inside the board
      */
     public int get(int row, int col) throws OutOfBoundsException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         try {
             return board.get(row * 9 + col).getFieldValue();
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -57,6 +56,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public void set(int row, int col, int val) throws OutOfBoundsException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         if (row < 0 || row > 9 || col < 0 || col > 9) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
@@ -70,6 +70,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public SudokuRow getRow(int row) throws OutOfBoundsException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         if (row < 0 || row > 9) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
@@ -81,6 +82,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public SudokuColumn getColumn(int column) throws OutOfBoundsException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         if (column < 0 || column > 9) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
@@ -92,6 +94,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public SudokuBox getBox(int row, int column) throws OutOfBoundsException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         if (row < 0 || row > 9 || column < 0 || column > 9) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
@@ -166,6 +169,7 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     @Override
     public Object clone() throws CloningException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         SudokuBoard sudokuBoardClone;
         try {
             sudokuBoardClone = (SudokuBoard) super.clone();
@@ -189,6 +193,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) throws NullArgumentException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         if (pcl == null) {
             throw new  NullArgumentException(resourceBundle.getString("NullArgumentException"));
         }
@@ -197,6 +202,7 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     public void removePropertyChangeListener(PropertyChangeListener pcl)
             throws NullArgumentException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         if (pcl == null) {
             throw new NullArgumentException(resourceBundle.getString("NullArgumentException"));
         }

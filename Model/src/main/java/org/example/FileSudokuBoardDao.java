@@ -13,7 +13,7 @@ import org.example.exceptions.IoDaoException;
 
 public class FileSudokuBoardDao implements Dao<SudokuBoard> {
 
-    private static final Logger logger = Logger.getLogger(Repository.class.getName());
+    private static final Logger logger = Logger.getLogger(FileSudokuBoardDao.class.getName());
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
 
@@ -37,7 +37,7 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
     @Override
     public SudokuBoard read() throws DaoException {
 
-        logger.info("Reading from file" + file.getName());
+        logger.info("Reading from file " + file.getName());
 
         //SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
         SudokuBoard sudokuBoard;
@@ -57,7 +57,7 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
 
     @Override
     public void write(SudokuBoard obj) throws DaoException {
-        logger.info("Saving to file" + file.getName());
+        logger.info("Saving to file " + file.getName());
         try (FileOutputStream fileOut = new FileOutputStream(file);
              ObjectOutputStream outObj = new ObjectOutputStream(fileOut)) {
             outObj.writeObject(obj);

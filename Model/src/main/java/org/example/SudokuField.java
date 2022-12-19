@@ -9,8 +9,6 @@ import org.example.exceptions.NullArgumentException;
 
 public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
 
-    ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
-
     private int value = 0;
 
     public int getFieldValue() {
@@ -50,6 +48,7 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
 
     @Override
     public Object clone() throws CloningException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         try {
             return super.clone();
         } catch (CloneNotSupportedException e) {
@@ -59,6 +58,7 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
 
     @Override
     public int compareTo(SudokuField s) throws NullArgumentException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ExceptionsMessages");
         if (s == null) {
             throw new NullArgumentException(resourceBundle.getString("NullArgumentException"));
         }
