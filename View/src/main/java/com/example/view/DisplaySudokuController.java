@@ -117,7 +117,7 @@ public class DisplaySudokuController {
         }
     }
 
-    public void saveToFile() {
+    public void saveToFile() throws Exception {
         try (Dao<SudokuBoard> sudokuBoardDao = getFileDao(path.getText());
              Dao<SudokuBoard> originalSudokuBoardDao = getFileDao("Original_" + path.getText())
         ) {
@@ -129,8 +129,6 @@ public class DisplaySudokuController {
             }
         } catch (DaoException e) {
             throw new RuntimeException(e);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

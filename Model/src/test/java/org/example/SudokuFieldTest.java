@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.example.exceptions.CloningException;
 import org.example.exceptions.NullArgumentException;
 import org.junit.jupiter.api.Test;
 
@@ -98,8 +99,8 @@ class SudokuFieldTest {
 
             assertEquals(f1.getFieldValue(), 5);
             assertEquals(f2.getFieldValue(), 9);
-        } catch (CloneNotSupportedException e) {
-            System.out.println("Error");
+        } catch (CloningException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -1,7 +1,6 @@
 package com.example.view;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,9 +13,6 @@ public class Application extends javafx.application.Application {
 
         ResourceBundle bundle = ResourceBundle.getBundle("com.example.view.MyBundle");
         fxmlLoader.setResources(bundle);
-
-        //ResourceBundle listBundle = ResourceBundle.getBundle("Resource", new Locale("pl"));
-        //System.out.println(listBundle.getObject("dev1"));
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(bundle.getString("title"));

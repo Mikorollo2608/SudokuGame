@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.example.exceptions.CloningException;
 import org.example.exceptions.NullArgumentException;
 import org.example.exceptions.OutOfBoundsException;
 import org.junit.jupiter.api.Test;
@@ -172,8 +174,8 @@ class SudokuStructureTest {
             assertEquals(8, sudokuStructure.get(1).getFieldValue());
             assertEquals(4, structureClone.get(1).getFieldValue());
 
-        } catch (CloneNotSupportedException e) {
-            System.err.println(e);
+        } catch (CloningException e) {
+            throw new RuntimeException(e);
         }
     }
 
