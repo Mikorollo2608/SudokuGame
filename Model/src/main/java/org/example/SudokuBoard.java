@@ -48,16 +48,14 @@ public class SudokuBoard implements Serializable, Cloneable {
      * @throws OutOfBoundsException When trying to access fields not inside the board
      */
     public int get(int row, int col) throws OutOfBoundsException {
-        try {
-            return board.get(row * 9 + col).getFieldValue();
-        } catch (ArrayIndexOutOfBoundsException e) {
+        if (row < 0 || row > 8 || col < 0 || col > 8) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
-
+            return board.get(row * 9 + col).getFieldValue();
     }
 
     public void set(int row, int col, int val) throws OutOfBoundsException {
-        if (row < 0 || row > 9 || col < 0 || col > 9) {
+        if (row < 0 || row > 8 || col < 0 || col > 8) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
         int tmp = board.get(row * 9 + col).getFieldValue();
@@ -70,7 +68,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public SudokuRow getRow(int row) throws OutOfBoundsException {
-        if (row < 0 || row > 9) {
+        if (row < 0 || row > 8) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
         SudokuRow sudokuRow = new SudokuRow();
@@ -81,7 +79,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public SudokuColumn getColumn(int column) throws OutOfBoundsException {
-        if (column < 0 || column > 9) {
+        if (column < 0 || column > 8) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
         SudokuColumn sudokuColumn = new SudokuColumn();
@@ -92,7 +90,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     public SudokuBox getBox(int row, int column) throws OutOfBoundsException {
-        if (row < 0 || row > 9 || column < 0 || column > 9) {
+        if (row < 0 || row > 8 || column < 0 || column > 8) {
             throw new OutOfBoundsException(resourceBundle.getString("OutOfBoundsException"));
         }
         SudokuBox sudokuBox = new SudokuBox();
