@@ -1,18 +1,21 @@
 package com.example.view;
 
+import static org.example.SudokuBoardDaoFactory.getFileDao;
+
+import java.io.IOException;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.example.BacktrackingSudokuSolver;
+import org.example.Dao;
 import org.example.SudokuBoard;
 import org.example.SudokuBoardListener;
 
@@ -21,6 +24,7 @@ public class DisplaySudokuController {
 
     private SudokuBoard sudokuBoard;
 
+    private SudokuBoard readSudokuBoard;
 
     private SudokuBoardListener sudokuBoardListener;
     private TextField[] textFields;
@@ -32,6 +36,8 @@ public class DisplaySudokuController {
     @FXML
     private Label badNumberText;
 
+    @FXML
+    private TextArea path;
 
     public DisplaySudokuController() {
         sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
@@ -39,11 +45,19 @@ public class DisplaySudokuController {
         textFields = new TextField[81];
     }
 
-    public void display(Difficulty lvl) {
-        sudokuBoard.solveGame();
+    void setReadSudokuBoard(SudokuBoard readSudokuBoard) {
+        this.readSudokuBoard = readSudokuBoard;
+    }
+
+    public void display(Difficulty lvl, boolean fromFile) {
+        if (fromFile) {
+            sudokuBoard = readSudokuBoard;
+        } else {
+            sudokuBoard.solveGame();
+            chosenLevel = lvl;
+            chosenLevel.removeFields(sudokuBoard);
+        }
         sudokuBoard.addPropertyChangeListener(sudokuBoardListener);
-        chosenLevel = lvl;
-        chosenLevel.removeFields(sudokuBoard);
         int i = 0;
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
@@ -86,6 +100,14 @@ public class DisplaySudokuController {
                 grid.add(textFields[i], col, row, 1, 1);
                 i++;
             }
+        }
+    }
+
+    public void saveToFile() {
+        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao(path.getText())) {
+            sudokuBoardDao.write(sudokuBoard);
+        } catch (Exception e) {
+            System.err.println("Exception!");
         }
     }
 

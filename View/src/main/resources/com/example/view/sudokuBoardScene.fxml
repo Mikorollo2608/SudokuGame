@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="738.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.view.DisplaySudokuController">
+<AnchorPane prefHeight="738.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.view.DisplaySudokuController">
    <children>
       <Label layoutX="367.0" layoutY="14.0" text="Sudoku" textAlignment="CENTER">
          <font>
@@ -38,6 +38,13 @@
       <Label fx:id="badNumberText" layoutX="145.0" layoutY="665.0" prefHeight="58.0" prefWidth="544.0">
          <font>
             <Font size="36.0" />
+         </font>
+      </Label>
+      <Button layoutX="807.0" layoutY="268.0" mnemonicParsing="false" onAction="#saveToFile" text="%saveButton" />
+      <TextArea fx:id="path" layoutX="757.0" layoutY="222.0" prefHeight="30.0" prefWidth="184.0" promptText="%promptText" />
+      <Label layoutX="790.0" layoutY="192.0" text="%pathLabel">
+         <font>
+            <Font size="20.0" />
          </font>
       </Label>
    </children>

@@ -8,13 +8,17 @@
    <children>
       <AnchorPane prefHeight="355.0" prefWidth="720.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="level" layoutX="282.0" layoutY="14.0" text="Choose level">
+            <Label fx:id="level" alignment="CENTER" layoutX="128.0" layoutY="14.0" prefHeight="40.0" prefWidth="456.0" text="%chooseLevel" textAlignment="CENTER" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="128.0">
                <font>
                   <Font size="28.0" />
                </font></Label>
-            <Button fx:id="easyButton" layoutX="339.0" layoutY="100.0" mnemonicParsing="false" onAction="#pressedEasyButton" text="Easy" />
-            <Button fx:id="mediumButton" alignment="CENTER" layoutX="328.0" layoutY="165.0" mnemonicParsing="false" onAction="#pressedMediumButton" text="Medium" />
-            <Button fx:id="hardButton" layoutX="337.0" layoutY="236.0" mnemonicParsing="false" onAction="#pressedHardButton" text="Hard" />
+            <Button fx:id="easyButton" layoutX="337.0" layoutY="100.0" mnemonicParsing="false" onAction="#pressedEasyButton" text="%easyButton" />
+            <Button fx:id="mediumButton" layoutX="326.0" layoutY="165.0" mnemonicParsing="false" onAction="#pressedMediumButton" text="%mediumButton" textAlignment="CENTER" />
+            <Button fx:id="hardButton" layoutX="336.0" layoutY="236.0" mnemonicParsing="false" onAction="#pressedHardButton" text="%hardButton" />
+            <Button fx:id="readButton" layoutX="563.0" layoutY="314.0" mnemonicParsing="false" onAction="#pressedReadButton" prefHeight="26.0" prefWidth="149.0" text="%readButton" />
+            <TextArea fx:id="path" layoutX="569.0" layoutY="262.0" prefHeight="40.0" prefWidth="137.0" promptText="%promptText" />
+            <Button layoutX="674.0" layoutY="13.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="31.0" onAction="#pressedEnglishLangButton" text="EN" />
+            <Button layoutX="638.0" layoutY="13.0" mnemonicParsing="false" onAction="#pressedPolishLangButton" text="PL" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
