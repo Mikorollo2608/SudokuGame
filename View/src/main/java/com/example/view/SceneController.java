@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import org.example.Dao;
@@ -33,6 +34,11 @@ public class SceneController {
 
     @FXML
     private TextArea path;
+
+    @FXML
+    private Label dev1;
+    @FXML
+    private Label dev2;
 
 
     public void loadNewView(ActionEvent event) throws IOException {
@@ -100,5 +106,16 @@ public class SceneController {
     public void pressedEnglishLangButton(ActionEvent event) throws IOException {
         Locale.setDefault(new Locale("en"));
         loadNewView(event);
+    }
+
+    public void pressedAuthorsButton() {
+        ResourceBundle resource = ResourceBundle.getBundle("com.example.view.Resource");
+        if (!dev1.getText().isEmpty() && !dev2.getText().isEmpty()) {
+            dev1.setText("");
+            dev2.setText("");
+        } else {
+            dev1.setText(resource.getString("dev1"));
+            dev2.setText(resource.getString("dev2"));
+        }
     }
 }

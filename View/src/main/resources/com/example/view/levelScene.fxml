@@ -6,19 +6,30 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.view.SceneController">
    <children>
-      <AnchorPane prefHeight="355.0" prefWidth="720.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="355.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="level" alignment="CENTER" layoutX="128.0" layoutY="14.0" prefHeight="40.0" prefWidth="456.0" text="%chooseLevel" textAlignment="CENTER" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="128.0">
+            <Label fx:id="level" alignment="CENTER" layoutX="149.0" layoutY="19.0" prefHeight="40.0" prefWidth="456.0" text="%chooseLevel" textAlignment="CENTER" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="111.0">
                <font>
                   <Font size="28.0" />
                </font></Label>
-            <Button fx:id="easyButton" layoutX="337.0" layoutY="100.0" mnemonicParsing="false" onAction="#pressedEasyButton" text="%easyButton" />
-            <Button fx:id="mediumButton" layoutX="326.0" layoutY="165.0" mnemonicParsing="false" onAction="#pressedMediumButton" text="%mediumButton" textAlignment="CENTER" />
-            <Button fx:id="hardButton" layoutX="336.0" layoutY="236.0" mnemonicParsing="false" onAction="#pressedHardButton" text="%hardButton" />
-            <Button fx:id="readButton" layoutX="563.0" layoutY="314.0" mnemonicParsing="false" onAction="#pressedReadButton" prefHeight="26.0" prefWidth="149.0" text="%readButton" />
-            <TextArea fx:id="path" layoutX="569.0" layoutY="262.0" prefHeight="40.0" prefWidth="137.0" promptText="%promptText" />
-            <Button layoutX="674.0" layoutY="13.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="31.0" onAction="#pressedEnglishLangButton" text="EN" />
-            <Button layoutX="638.0" layoutY="13.0" mnemonicParsing="false" onAction="#pressedPolishLangButton" text="PL" />
+            <Button fx:id="easyButton" alignment="CENTER" layoutX="326.0" layoutY="100.0" mnemonicParsing="false" onAction="#pressedEasyButton" prefHeight="26.0" prefWidth="106.0" text="%easyButton" AnchorPane.leftAnchor="326.0" AnchorPane.rightAnchor="287.6" />
+            <Button fx:id="mediumButton" layoutX="326.0" layoutY="165.0" mnemonicParsing="false" onAction="#pressedMediumButton" prefHeight="26.0" prefWidth="106.0" text="%mediumButton" textAlignment="CENTER" AnchorPane.leftAnchor="326.0" AnchorPane.rightAnchor="287.6" />
+            <Button fx:id="hardButton" layoutX="325.0" layoutY="236.0" mnemonicParsing="false" onAction="#pressedHardButton" prefHeight="26.0" prefWidth="106.0" text="%hardButton" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="288.6" />
+            <Button fx:id="readButton" layoutX="563.0" layoutY="314.0" mnemonicParsing="false" onAction="#pressedReadButton" prefHeight="26.0" prefWidth="149.0" text="%readButton" AnchorPane.bottomAnchor="14.79999999999999" AnchorPane.rightAnchor="7.400000000000006" />
+            <TextArea fx:id="path" layoutX="569.0" layoutY="262.0" prefHeight="40.0" prefWidth="137.0" promptText="%promptText" AnchorPane.bottomAnchor="53.19999999999999" AnchorPane.rightAnchor="13.400000000000006" />
+            <Button layoutX="674.0" layoutY="13.0" mnemonicParsing="false" onAction="#pressedEnglishLangButton" prefHeight="26.0" prefWidth="31.0" text="EN" AnchorPane.rightAnchor="7.400000000000006" />
+            <Button layoutX="644.0" layoutY="13.0" mnemonicParsing="false" onAction="#pressedPolishLangButton" text="PL" AnchorPane.rightAnchor="47.200000000000045" />
+            <Button layoutX="127.0" layoutY="87.0" mnemonicParsing="false" onAction="#pressedAuthorsButton" text="%devs" />
+            <Label fx:id="dev1" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="126.0" prefHeight="30.0" prefWidth="248.0" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="dev2" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="162.0" prefHeight="30.0" prefWidth="248.0" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
    </children>
 </AnchorPane>

@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="738.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.view.DisplaySudokuController">
    <children>
-      <Label layoutX="367.0" layoutY="14.0" text="Sudoku" textAlignment="CENTER">
+      <Label layoutX="367.0" layoutY="14.0" text="Sudoku" textAlignment="CENTER" AnchorPane.leftAnchor="367.0" AnchorPane.rightAnchor="508.2">
          <font>
             <Font size="30.0" />
          </font>
@@ -47,5 +47,6 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#pressedReturnButton" text="%returnButton" />
    </children>
 </AnchorPane>

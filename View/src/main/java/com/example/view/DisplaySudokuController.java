@@ -4,7 +4,9 @@ import static org.example.SudokuBoardDaoFactory.getFileDao;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -30,6 +32,8 @@ public class DisplaySudokuController {
     private TextField[] textFields;
 
     private Difficulty chosenLevel;
+
+    private ResourceBundle bundle;
     @FXML
     private GridPane grid;
 
@@ -43,6 +47,7 @@ public class DisplaySudokuController {
         sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
         sudokuBoardListener = new SudokuBoardListener(sudokuBoard);
         textFields = new TextField[81];
+        bundle = ResourceBundle.getBundle("com.example.view.MyBundle");
     }
 
     void setReadSudokuBoard(SudokuBoard readSudokuBoard) {
@@ -79,14 +84,13 @@ public class DisplaySudokuController {
 
                     final int indexRow = row;
                     final int indexCol = col;
-                    ///TODO better displaying information
 
                     textFields[i].textProperty().addListener((observable, oldValue, newValue) -> {
                         if (!Objects.equals(newValue, "")) {
                             sudokuBoard.set(indexRow,indexCol,Integer.parseInt(newValue));
                             if (!sudokuBoardListener.check()) {
-                                badNumberText.setText("This value doesn't fit here! "
-                                        + "[" + indexRow + ", " + indexCol + "]");
+                                badNumberText.setText(bundle.getString("warning")
+                                        + " [" + indexRow + ", " + indexCol + "]");
                             } else {
                                 badNumberText.setText("");
                             }
@@ -109,6 +113,11 @@ public class DisplaySudokuController {
         } catch (Exception e) {
             System.err.println("Exception!");
         }
+    }
+
+    public void pressedReturnButton(ActionEvent event) throws IOException {
+        SceneController sceneController = new SceneController();
+        sceneController.loadNewView(event);
     }
 
 }
