@@ -4,6 +4,8 @@ import static org.example.SudokuBoardDaoFactory.getFileDao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,12 +14,17 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import org.apache.log4j.Logger;
+import org.example.exceptions.DaoException;
+import org.example.exceptions.IoDaoException;
 import org.junit.jupiter.api.Test;
 
 
 public class FileSudokuBoardDaoTest {
     @Test
     void readWriteSuccessfulTest() {
+        Logger logger = Logger.getLogger(FileSudokuBoardDaoTest.class.getName());
+
         try (Dao<SudokuBoard> sudokuBoardDao = getFileDao("testBoard.txt")) {
             SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
 
@@ -27,72 +34,64 @@ public class FileSudokuBoardDaoTest {
             SudokuBoard sudokuBoard1 = sudokuBoardDao.read();
             assertEquals(sudokuBoard1, sudokuBoard);
 
-        } catch (NoSuchFileException e) {
-            System.err.format("No such file");
         } catch (Exception e) {
-            System.err.println(e);
+            fail("No exception was excpected");
         }
 
         try {
             Files.deleteIfExists(Paths.get("testBoard.txt"));
         } catch (IOException e) {
-            System.err.println(e);
+            logger.info("Error during deleting file");
         }
     }
 
     @Test
     void readIoExceptionTest() {
-        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao("NotExistingFile.txt")) {
-        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        assertEquals(sudokuBoard, sudokuBoardDao.read());
+        Logger logger = Logger.getLogger(FileSudokuBoardDaoTest.class.getName());
 
-        } catch (NoSuchFileException e) {
-            System.err.format("No such file");
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+        assertThrows(IoDaoException.class, () -> {
+            try (Dao<SudokuBoard> sudokuBoardDao = getFileDao("NotExistingFile.txt")) {
+                SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+                assertEquals(sudokuBoard, sudokuBoardDao.read());
+
+            }
+        });
 
         try {
             Files.deleteIfExists(Paths.get("NotExistingFile.txt"));
         } catch (Exception e) {
-            System.err.println(e);
+            logger.info("Error during deleting file");
         }
     }
 
     @Test
     void readOtherExceptionTest() {
-        try (FileOutputStream file = new FileOutputStream(new File("testBoard.txt"));
-             Dao<SudokuBoard> sudokuBoardDao = getFileDao("testBoard.txt")) {
-            String obj = "test";
-            ObjectOutputStream outObj = new ObjectOutputStream(file);
-            outObj.writeObject(obj);
+        Logger logger = Logger.getLogger(FileSudokuBoardDaoTest.class.getName());
 
-        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        assertEquals(sudokuBoard, sudokuBoardDao.read());
+        assertThrows(DaoException.class, () -> {
+            try (FileOutputStream file = new FileOutputStream(new File("testBoard.txt"));
+                 Dao<SudokuBoard> sudokuBoardDao = getFileDao("testBoard.txt")) {
+                String obj = "test";
+                ObjectOutputStream outObj = new ObjectOutputStream(file);
+                outObj.writeObject(obj);
 
-        } catch (IOException e) {
-            System.out.println("IOException!");
-        } catch (Exception e) {
-            System.out.println("Exception!");
-        }
+                SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
+                assertEquals(sudokuBoard, sudokuBoardDao.read());
+            }
+        });
 
         try {
             Files.deleteIfExists(Paths.get("testBoard.txt"));
         } catch (IOException e) {
-            System.err.println(e);
+            logger.info("Error during deleting file");
         }
     }
 
     @Test
-    void writeIoExceptionTest() {
-        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao("!@#%$^(&*")) {
-            SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-            sudokuBoardDao.write(sudokuBoard);
-            File file = new File("!@#%$^(&*");
-            assertFalse(file.exists());
-        } catch (Exception e) {
-            System.out.println("Exception!");
-        }
+    void constructorIoDaoExceptionTest() {
+        assertThrows(IoDaoException.class, () -> {
+            FileSudokuBoardDao fileSudokuBoardDao = new FileSudokuBoardDao("!@#%$^(&*");
+        });
     }
 
     @Test
