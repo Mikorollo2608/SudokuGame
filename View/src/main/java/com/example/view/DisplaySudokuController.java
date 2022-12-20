@@ -115,6 +115,17 @@ public class DisplaySudokuController {
                 i++;
             }
         }
+        sudokuBoard.addPropertyChangeListener((observable) -> {
+                int x = 0;
+                for (int row = 0; row < 9; row++) {
+                    for (int col = 0; col < 9; col++) {
+                        if (sudokuBoard.get(row, col) != 0) {
+                            textFields[x].setText(Integer.toString(sudokuBoard.get(row, col)));
+                        }
+                        x++;
+                    }
+                }
+        });
     }
 
     public void saveToFile() throws Exception {
@@ -137,4 +148,10 @@ public class DisplaySudokuController {
         sceneController.loadNewView(event);
     }
 
+    public void setField() {
+        System.err.println(sudokuBoard.get(1,1));
+        sudokuBoard.set(0,0,7);
+        sudokuBoard.set(8,8,7);
+        System.err.println(sudokuBoard.get(1,1));
+    }
 }
