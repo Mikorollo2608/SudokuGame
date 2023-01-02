@@ -62,7 +62,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
                         + " " + e.getSQLState());
             }
         }
-        logger.info("Database connection established");
+        logger.info(resourceBundle.getString("JdbcDaoMessageDatabaseEstablished"));
     }
 
     @Override
@@ -157,6 +157,6 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
                 throw new DaoException(resourceBundle.getString("JdbcDaoExceptionClosing"));
             }
         }
-        logger.info("Database connection closed");
+        logger.info(resourceBundle.getString("JdbcDaoMessageDatabaseClosed"));
     }
 }
