@@ -2,3 +2,5 @@
 target/
 *.iml
 *.txt
+*.log
+Database/
