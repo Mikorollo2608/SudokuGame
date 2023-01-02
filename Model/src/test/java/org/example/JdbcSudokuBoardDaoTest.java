@@ -176,6 +176,9 @@ public class JdbcSudokuBoardDaoTest {
 
             dao.setName("testBoard");
             dao.write(sudokuBoard);
+
+            assertEquals("testBoard", dao.getName());
+
             dao.setName("testBoard1");
             dao.write(sudokuBoard1);
             dao.setName("testBoard2");
