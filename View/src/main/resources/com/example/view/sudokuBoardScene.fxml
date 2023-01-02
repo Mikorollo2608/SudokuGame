@@ -48,8 +48,13 @@
          </font>
       </Label>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#pressedReturnButton" text="%returnButton" />
-      <Button layoutX="809.0" layoutY="415.0" mnemonicParsing="false" onAction="#saveToDatabase" text="%writeToDB" />
+      <Button layoutX="801.0" layoutY="418.0" mnemonicParsing="false" onAction="#saveToDatabase" text="%writeToDB" />
       <TextArea fx:id="nameForDatabaseWrite" layoutX="757.0" layoutY="369.0" prefHeight="30.0" prefWidth="184.0" />
+      <Label layoutX="793.0" layoutY="338.0" text="%nameLabel">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
 <!--       <Button layoutX="35.0" layoutY="167.0" mnemonicParsing="false" onAction="#setField" text="DoubleBindingTest" />-->
    </children>
 </AnchorPane>

@@ -1,6 +1,8 @@
 package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -29,11 +31,21 @@ public class JdbcSudokuBoardDaoTest {
 
             dao.setName("testBoard");
             dao.write(sudokuBoard);
-            assertEquals(sudokuBoard, dao.read());
+
+            SudokuBoard readSudokuBoard = dao.read();
+
+            assertNotNull(readSudokuBoard);
+            assertEquals(sudokuBoard, readSudokuBoard);
+            assertNotSame(sudokuBoard, readSudokuBoard);
 
             dao.setName("testBoard1");
             dao.write(sudokuBoard1);
-            assertEquals(sudokuBoard1, dao.read());
+
+            SudokuBoard readSudokuBoard1 = dao.read();
+
+            assertNotNull(readSudokuBoard1);
+            assertEquals(sudokuBoard1, readSudokuBoard1);
+            assertNotSame(sudokuBoard1, readSudokuBoard1);
 
         } catch (DaoException e) {
             fail();
