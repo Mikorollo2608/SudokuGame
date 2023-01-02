@@ -48,6 +48,8 @@
          </font>
       </Label>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#pressedReturnButton" text="%returnButton" />
-      <Button layoutX="35.0" layoutY="167.0" mnemonicParsing="false" onAction="#setField" text="Button" />
+      <Button layoutX="809.0" layoutY="415.0" mnemonicParsing="false" onAction="#saveToDatabase" text="%writeToDB" />
+      <TextArea fx:id="nameForDatabaseWrite" layoutX="757.0" layoutY="369.0" prefHeight="30.0" prefWidth="184.0" />
+<!--       <Button layoutX="35.0" layoutY="167.0" mnemonicParsing="false" onAction="#setField" text="DoubleBindingTest" />-->
    </children>
 </AnchorPane>

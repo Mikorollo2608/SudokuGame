@@ -15,8 +15,8 @@
             <Button fx:id="easyButton" alignment="CENTER" layoutX="326.0" layoutY="100.0" mnemonicParsing="false" onAction="#pressedEasyButton" prefHeight="26.0" prefWidth="106.0" text="%easyButton" AnchorPane.leftAnchor="326.0" AnchorPane.rightAnchor="287.6" />
             <Button fx:id="mediumButton" layoutX="326.0" layoutY="165.0" mnemonicParsing="false" onAction="#pressedMediumButton" prefHeight="26.0" prefWidth="106.0" text="%mediumButton" textAlignment="CENTER" AnchorPane.leftAnchor="326.0" AnchorPane.rightAnchor="287.6" />
             <Button fx:id="hardButton" layoutX="325.0" layoutY="236.0" mnemonicParsing="false" onAction="#pressedHardButton" prefHeight="26.0" prefWidth="106.0" text="%hardButton" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="288.6" />
-            <Button fx:id="readButton" layoutX="563.0" layoutY="314.0" mnemonicParsing="false" onAction="#pressedReadButton" prefHeight="26.0" prefWidth="149.0" text="%readButton" AnchorPane.bottomAnchor="14.79999999999999" AnchorPane.rightAnchor="7.400000000000006" />
-            <TextArea fx:id="path" layoutX="569.0" layoutY="262.0" prefHeight="40.0" prefWidth="137.0" promptText="%promptText" AnchorPane.bottomAnchor="53.19999999999999" AnchorPane.rightAnchor="13.400000000000006" />
+            <Button fx:id="readButton" layoutX="562.0" layoutY="164.0" mnemonicParsing="false" onAction="#pressedReadButton" prefHeight="26.0" prefWidth="149.0" text="%readButton" AnchorPane.bottomAnchor="164.79999999999998" AnchorPane.rightAnchor="8.399999999999977" />
+            <TextArea fx:id="path" layoutX="568.0" layoutY="106.0" prefHeight="40.0" prefWidth="137.0" promptText="%promptText" AnchorPane.bottomAnchor="209.2" AnchorPane.rightAnchor="14.399999999999977" />
             <Button layoutX="674.0" layoutY="13.0" mnemonicParsing="false" onAction="#pressedEnglishLangButton" prefHeight="26.0" prefWidth="31.0" text="EN" AnchorPane.rightAnchor="7.400000000000006" />
             <Button layoutX="644.0" layoutY="13.0" mnemonicParsing="false" onAction="#pressedPolishLangButton" text="PL" AnchorPane.rightAnchor="47.200000000000045" />
             <Button layoutX="127.0" layoutY="87.0" mnemonicParsing="false" onAction="#pressedAuthorsButton" text="%devs" />
@@ -30,6 +30,9 @@
                   <Font size="20.0" />
                </font>
             </Label>
+            <Button layoutX="619.0" layoutY="309.0" mnemonicParsing="false" onAction="#pressedReadFromDataBaseButton" text="%readFromDB" />
+            <Button layoutX="502.0" layoutY="309.0" mnemonicParsing="false" onAction="#pressedShowBoardsInDatabase" text="%loadButton" />
+            <ChoiceBox fx:id="choiceBox" layoutX="534.0" layoutY="273.0" prefWidth="150.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

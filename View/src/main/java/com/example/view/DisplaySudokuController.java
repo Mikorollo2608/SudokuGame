@@ -1,5 +1,6 @@
 package com.example.view;
 
+import static org.example.SudokuBoardDaoFactory.getDatabaseDao;
 import static org.example.SudokuBoardDaoFactory.getFileDao;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.example.BacktrackingSudokuSolver;
 import org.example.Dao;
+import org.example.JdbcSudokuBoardDao;
 import org.example.SudokuBoard;
 import org.example.SudokuBoardListener;
 import org.example.exceptions.CloningException;
@@ -46,6 +48,9 @@ public class DisplaySudokuController {
 
     @FXML
     private TextArea path;
+
+    @FXML
+    private TextArea nameForDatabaseWrite;
 
     public DisplaySudokuController() {
         sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
@@ -137,6 +142,17 @@ public class DisplaySudokuController {
                 if (originalSudokuBoard != null && originalSudokuBoardDao != null) {
                     originalSudokuBoardDao.write(originalSudokuBoard);
                 }
+            }
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveToDatabase() throws Exception {
+        try (JdbcSudokuBoardDao sudokuBoardDao = getDatabaseDao()) {
+            if (sudokuBoard != null && sudokuBoardDao != null) {
+                sudokuBoardDao.setName(nameForDatabaseWrite.getText());
+                sudokuBoardDao.write(sudokuBoard);
             }
         } catch (DaoException e) {
             throw new RuntimeException(e);

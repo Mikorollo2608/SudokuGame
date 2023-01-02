@@ -1,22 +1,28 @@
 package com.example.view;
 
+import static org.example.SudokuBoardDaoFactory.getDatabaseDao;
 import static org.example.SudokuBoardDaoFactory.getFileDao;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import org.example.Dao;
+import org.example.JdbcSudokuBoardDao;
 import org.example.SudokuBoard;
 
 
@@ -32,6 +38,8 @@ public class SceneController {
 
     private boolean isReadFromFile = false;
 
+    private boolean writtenDisabled = true;
+
     @FXML
     private TextArea path;
 
@@ -39,6 +47,9 @@ public class SceneController {
     private Label dev1;
     @FXML
     private Label dev2;
+
+    @FXML
+    private ChoiceBox<String> choiceBox;
 
 
     public void loadNewView(ActionEvent event) throws IOException {
@@ -88,13 +99,13 @@ public class SceneController {
 
     public void pressedReadButton(ActionEvent event) {
         if (Files.exists(Paths.get(path.getText()))) {
-        try (Dao<SudokuBoard> sudokuBoardDao = getFileDao(path.getText())) {
-            isReadFromFile = true;
-            sudokuBoard = sudokuBoardDao.read();
-            switchToSudokuBoardScene(event);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            try (Dao<SudokuBoard> sudokuBoardDao = getFileDao(path.getText())) {
+                isReadFromFile = true;
+                sudokuBoard = sudokuBoardDao.read();
+                switchToSudokuBoardScene(event);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -118,4 +129,38 @@ public class SceneController {
             dev2.setText(resource.getString("dev2"));
         }
     }
+
+    public void pressedReadFromDataBaseButton(ActionEvent event) {
+        ResourceBundle bundle = ResourceBundle.getBundle("com.example.view.MyBundle");
+        String chosen = choiceBox.getValue();
+        if (!writtenDisabled && !chosen.equals(bundle.getString("choose"))) {
+            try (JdbcSudokuBoardDao sudokuBoardDao = getDatabaseDao()) {
+                isReadFromFile = true;
+                sudokuBoardDao.setName(choiceBox.getValue());
+                sudokuBoard = sudokuBoardDao.read();
+                switchToSudokuBoardScene(event);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void pressedShowBoardsInDatabase() {
+        ResourceBundle bundle = ResourceBundle.getBundle("com.example.view.MyBundle");
+        try (JdbcSudokuBoardDao sudokuBoardDao = getDatabaseDao()) {
+            ArrayList<String> names = sudokuBoardDao.getNames();
+            if (!names.isEmpty()) {
+                choiceBox.setItems(FXCollections.observableArrayList(names));
+                choiceBox.setValue(bundle.getString("choose"));
+                writtenDisabled = false;
+            } else {
+                choiceBox.setValue("noTabsInDB");
+                writtenDisabled = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
