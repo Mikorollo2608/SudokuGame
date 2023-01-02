@@ -15,5 +15,14 @@ public class SudokuBoardDaoFactory {
         }
         return null;
     }
+
+    public static Dao<SudokuBoard> getDatabaseDao() {
+        try {
+            return new JdbcSudokuBoardDao();
+        } catch (DaoException e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }
 
