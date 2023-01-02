@@ -7,7 +7,7 @@ import org.example.exceptions.DaoException;
 public class SudokuBoardDaoFactory {
     private static final Logger logger = Logger.getLogger(Repository.class.getName());
 
-    public static Dao<SudokuBoard> getFileDao(String fileName) {
+    public static FileSudokuBoardDao getFileDao(String fileName) {
         try {
             return new FileSudokuBoardDao(fileName);
         } catch (DaoException e) {
@@ -16,7 +16,7 @@ public class SudokuBoardDaoFactory {
         return null;
     }
 
-    public static Dao<SudokuBoard> getDatabaseDao() {
+    public static JdbcSudokuBoardDao getDatabaseDao() {
         try {
             return new JdbcSudokuBoardDao();
         } catch (DaoException e) {

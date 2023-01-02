@@ -92,9 +92,4 @@ public class FileSudokuBoardDaoTest {
         });
     }
 
-    @Test
-    void sudokuBoardDaoFactoryTest() {
-        SudokuBoardDaoFactory sudokuBoardDaoFactory = new SudokuBoardDaoFactory();
-        assertNotNull(sudokuBoardDaoFactory);
-    }
 }
